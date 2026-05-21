@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Cart | BurgerHub{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <p class="eyebrow">Your Cart</p>
+    <h1>Review Your Order</h1>
+    <p>Your selected items will appear here once cart functionality is added.</p>
+</section>
+
+<section class="cart-wrapper">
+    <div class="cart-empty-card">
+        <h2>Your cart is empty</h2>
+        <p>Start exploring the menu and add your favorite meals to the cart.</p>
+
+        <div class="cart-actions">
+            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">Explore Menu</a>
+            <a href="{{ url_for('main.checkout') }}" class="btn btn-secondary">Go to Checkout</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

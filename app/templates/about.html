@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}About | BurgerHub{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/about.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <p class="eyebrow">Our Story</p>
+    <h1>Built for People Who Love Great Food</h1>
+    <p>
+        BurgerHub is a modern fast food brand focused on fresh ingredients, bold flavors,
+        and a smooth digital ordering experience.
+    </p>
+</section>
+
+<section class="section two-column">
+    <div>
+        <h2>Quality First</h2>
+        <p>
+            Every item is designed to be simple, satisfying, and consistent. From burgers
+            to shakes, our goal is to make every order memorable.
+        </p>
+    </div>
+
+    <div>
+        <h2>Fast Experience</h2>
+        <p>
+            We are building a digital-first food experience where users can browse,
+            order, customize, and checkout quickly.
+        </p>
+    </div>
+</section>
+
+<section class="brand-values">
+    <article class="value-card">
+        <h3>Fresh Ingredients</h3>
+        <p>We focus on fresh, high-quality ingredients to deliver consistent taste in every meal.</p>
+    </article>
+
+    <article class="value-card">
+        <h3>Fast Experience</h3>
+        <p>Our ordering experience is designed to be simple, fast, and smooth for every customer.</p>
+    </article>
+
+    <article class="value-card">
+        <h3>Bold Flavor</h3>
+        <p>Every burger, side, and drink is crafted to deliver a memorable fast food experience.</p>
+    </article>
+</section>
+
+{% endblock %}

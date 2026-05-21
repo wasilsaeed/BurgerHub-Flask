@@ -1,0 +1,154 @@
+/* =========================
+   About Page Layout
+========================= */
+
+.two-column {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 40px 24px 70px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 26px;
+}
+
+.two-column > div {
+    position: relative;
+    padding: 34px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background:
+        linear-gradient(180deg, rgba(255, 247, 237, 0.55), transparent 70%),
+        var(--white);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.two-column > div::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 34px;
+    width: 64px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--primary);
+}
+
+.two-column > div:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 61, 0, 0.3);
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.12);
+}
+
+.two-column h2 {
+    margin: 14px 0 12px;
+    font-size: 1.9rem;
+    letter-spacing: -0.8px;
+}
+
+.two-column p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.75;
+}
+
+
+/* =========================
+   Brand Values
+========================= */
+
+.brand-values {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 20px 24px 90px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.value-card {
+    position: relative;
+    padding: 30px;
+    border: 1px solid rgba(255, 61, 0, 0.08);
+    border-radius: var(--radius);
+    background:
+        radial-gradient(circle at top right, rgba(255, 61, 0, 0.12), transparent 34%),
+        var(--light);
+    overflow: hidden;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.value-card::after {
+    content: "★";
+    position: absolute;
+    right: 24px;
+    bottom: 18px;
+    color: rgba(255, 61, 0, 0.12);
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.value-card:hover {
+    transform: translateY(-8px);
+    background:
+        radial-gradient(circle at top right, rgba(255, 61, 0, 0.18), transparent 38%),
+        var(--white);
+    box-shadow: var(--shadow);
+}
+
+.value-card h3 {
+    position: relative;
+    margin: 0 0 12px;
+    font-size: 1.35rem;
+    letter-spacing: -0.4px;
+    z-index: 1;
+}
+
+.value-card p {
+    position: relative;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.75;
+    z-index: 1;
+}
+
+
+/* =========================
+   Responsive Design
+========================= */
+
+@media (max-width: 900px) {
+    .two-column,
+    .brand-values {
+        grid-template-columns: 1fr;
+    }
+
+    .two-column {
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 560px) {
+    .two-column,
+    .brand-values {
+        padding-right: 18px;
+        padding-left: 18px;
+    }
+
+    .two-column > div,
+    .value-card {
+        padding: 26px;
+    }
+
+    .two-column h2 {
+        font-size: 1.55rem;
+    }
+}

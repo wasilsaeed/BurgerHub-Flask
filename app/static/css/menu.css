@@ -1,0 +1,223 @@
+/* =========================
+   Menu Product Grid
+========================= */
+
+.product-grid {
+    max-width: var(--container);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+
+
+/* =========================
+   Product Card
+========================= */
+
+.product-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 61, 0, 0.1);
+    border-radius: var(--radius);
+    background: var(--white);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 61, 0, 0.3);
+    box-shadow: 0 28px 68px rgba(0, 0, 0, 0.12);
+}
+
+.product-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 22px;
+    width: 54px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--primary);
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.product-card:hover::before {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =========================
+   Product Image Area
+========================= */
+
+.product-image-placeholder {
+    position: relative;
+    min-height: 185px;
+    background:
+        radial-gradient(circle at center, rgba(255, 61, 0, 0.2), transparent 45%),
+        linear-gradient(180deg, rgba(255, 247, 237, 0.8), rgba(255, 247, 237, 0.35));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 4.4rem;
+    font-weight: 900;
+    overflow: hidden;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.product-image-placeholder::after {
+    content: "Fresh";
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--primary);
+    font-size: 0.68rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.product-card:hover .product-image-placeholder {
+    transform: scale(1.03);
+    background:
+        radial-gradient(circle at center, rgba(255, 61, 0, 0.28), transparent 48%),
+        linear-gradient(180deg, rgba(255, 247, 237, 1), rgba(255, 247, 237, 0.45));
+}
+
+
+/* =========================
+   Product Content
+========================= */
+
+.product-card-body {
+    position: relative;
+    z-index: 1;
+    padding: 24px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.product-category {
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--light);
+    color: var(--primary);
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-card h3 {
+    margin: 14px 0 10px;
+    font-size: 1.28rem;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
+}
+
+.product-card p {
+    margin: 0 0 22px;
+    min-height: 82px;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.product-card-footer {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.product-card-footer strong {
+    color: var(--primary);
+    font-size: 1.45rem;
+    font-weight: 900;
+}
+
+
+/* =========================
+   Button Shine Effect
+========================= */
+
+.product-card .btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card .btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.32),
+        transparent
+    );
+    transform: skewX(-20deg);
+}
+
+.product-card .btn:hover::after {
+    left: 130%;
+    transition: left 0.65s ease;
+}
+
+
+/* =========================
+   Responsive Design
+========================= */
+
+@media (max-width: 1100px) {
+    .product-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 840px) {
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .product-card-body {
+        padding: 22px;
+    }
+
+    .product-card p {
+        min-height: auto;
+    }
+}

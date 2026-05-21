@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Menu | BurgerHub{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/menu.css')}}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <p class="eyebrow">Our Menu</p>
+    <h1>Choose Your Favorite Meal</h1>
+    <p>Freshly prepared meals, sides, and drinks for every craving.</p>
+</section>
+
+<section class="section">
+    <div class="product-grid">
+        {% for product in products %}
+            <article class="product-card">
+                <div class="product-image-placeholder">
+                    {{ product.name[0] }}
+                </div>
+
+                <div class="product-card-body">
+                    <span class="product-category">{{ product.category }}</span>
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+
+                    <div class="product-card-footer">
+                        <strong>Rs. {{ product.price }}</strong>
+                        <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-small">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

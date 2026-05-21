@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Contact | BurgerHub{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/contact.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <p class="eyebrow">Contact Us</p>
+    <h1>We’d Love to Hear From You</h1>
+    <p>For partnerships, feedback, or support, reach out to our team.</p>
+</section>
+
+<section class="section contact-card">
+    <form>
+        <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="Enter your email">
+        </div>
+
+        <div class="form-group">
+            <label>Message</label>
+            <textarea rows="5" placeholder="Write your message"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+</section>
+
+<section class="contact-info">
+    <div class="contact-info-card">
+        <h3>Visit BurgerHub</h3>
+        <p>
+            Main Food Street, Lahore, Pakistan. Open daily from 12:00 PM to 1:00 AM.
+        </p>
+    </div>
+</section>
+
+{% endblock %}

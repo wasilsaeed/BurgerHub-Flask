@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}Home | BurgerHub{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">🔥 Hot & Fresh Every Day</span>
+
+        <h1>
+            Crave-Worthy Burgers,
+            <span>Delivered Fast.</span>
+        </h1>
+
+        <p>
+            Enjoy premium burgers, crispy fries, chilled shakes, and signature meals
+            crafted for bold flavor lovers.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">Order Now</a>
+            <a href="{{ url_for('main.menu') }}" class="btn btn-secondary">View Menu</a>
+        </div>
+
+        <div class="hero-stats">
+            <div>
+                <strong>25+</strong>
+                <span>Menu Items</span>
+            </div>
+
+            <div>
+                <strong>15 min</strong>
+                <span>Avg Delivery</span>
+            </div>
+
+            <div>
+                <strong>4.9</strong>
+                <span>Customer Rating</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="discount-badge">
+            <span>Save</span>
+            <strong>30%</strong>
+        </div>
+
+        <div class="burger-card">
+            <div class="burger-emoji">🍔</div>
+            <h3>Classic Beef Burger</h3>
+            <p>Juicy beef patty, melted cheese, fresh lettuce, and signature sauce.</p>
+
+            <div class="burger-card-footer">
+                <strong>Rs. 799</strong>
+                <a href="{{ url_for('main.product_detail', product_id=1) }}">View Item</a>
+            </div>
+        </div>
+
+        <div class="floating-card floating-card-left">
+            <span>🍟</span>
+            <div>
+                <strong>Crispy Fries</strong>
+                <small>Freshly seasoned</small>
+            </div>
+        </div>
+
+        <div class="floating-card floating-card-right">
+            <span>🥤</span>
+            <div>
+                <strong>Cold Drinks</strong>
+                <small>Perfect combo</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="category-section">
+    <div class="section-header">
+        <p class="eyebrow">Explore Categories</p>
+        <h2>Made for Every Craving</h2>
+    </div>
+
+    <div class="category-grid">
+        <article class="category-card">
+            <div class="category-icon">🍔</div>
+            <h3>Burgers</h3>
+            <p>Loaded, juicy, cheesy, and grilled to perfection.</p>
+        </article>
+
+        <article class="category-card">
+            <div class="category-icon">🍟</div>
+            <h3>Sides</h3>
+            <p>Crispy fries, loaded bites, and snackable favorites.</p>
+        </article>
+
+        <article class="category-card">
+            <div class="category-icon">🥤</div>
+            <h3>Drinks</h3>
+            <p>Refreshing chilled drinks and creamy shakes.</p>
+        </article>
+
+        <article class="category-card">
+            <div class="category-icon">🔥</div>
+            <h3>Deals</h3>
+            <p>Value combos made for friends, family, and foodies.</p>
+        </article>
+    </div>
+</section>
+
+<section class="featured-section">
+    <div class="section-header section-header-between">
+        <div>
+            <p class="eyebrow">Popular Picks</p>
+            <h2>Customer Favorites</h2>
+        </div>
+
+        <a href="{{ url_for('main.menu') }}" class="view-all-link">View Full Menu</a>
+    </div>
+
+    <div class="product-grid">
+        {% for product in featured_products %}
+            <article class="product-card">
+                <div class="product-image-placeholder">
+                    {{ product.name[0] }}
+                </div>
+
+                <div class="product-card-body">
+                    <span class="product-category">{{ product.category }}</span>
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+
+                    <div class="product-card-footer">
+                        <strong>Rs. {{ product.price }}</strong>
+                        <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-dark btn-small">
+                            View
+                        </a>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="promo-section">
+    <div class="promo-card">
+        <div class="promo-content">
+            <p class="eyebrow">Limited Time Offer</p>
+            <h2>Get Your Favorite Meal Combo Today</h2>
+            <p>
+                Grab a burger, fries, and drink combo with bold flavor and fast delivery.
+                Perfect for lunch breaks, late-night cravings, and weekend treats.
+            </p>
+
+            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">Explore Deals</a>
+        </div>
+
+        <div class="promo-visual">
+            <span>🍔</span>
+            <span>🍟</span>
+            <span>🥤</span>
+        </div>
+    </div>
+</section>
+
+<section class="trust-section">
+    <div class="trust-card">
+        <span>✅</span>
+        <h3>Fresh Ingredients</h3>
+        <p>Prepared daily with quality ingredients and bold flavors.</p>
+    </div>
+
+    <div class="trust-card">
+        <span>⚡</span>
+        <h3>Fast Service</h3>
+        <p>Designed for quick ordering and smooth delivery experiences.</p>
+    </div>
+
+    <div class="trust-card">
+        <span>⭐</span>
+        <h3>Premium Taste</h3>
+        <p>Every meal is built to be satisfying, consistent, and memorable.</p>
+    </div>
+</section>
+
+{% endblock %}

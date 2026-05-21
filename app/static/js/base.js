@@ -1,0 +1,1 @@
+console.log("BurgerHub frontend loaded successfully.");
