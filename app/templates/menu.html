@@ -16,28 +16,38 @@
 </section>
 
 <section class="section">
-    <div class="product-grid">
-        {% for product in products %}
-            <article class="product-card">
-                <div class="product-image-placeholder">
-                    {{ product.name[0] }}
-                </div>
+    {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+                <article class="product-card">
+                    <!-- <div class="product-detail-image"> -->
+          <img class="product-detail-image" src="{{product.image}}" alt="{{product.name}}">
+    <!-- </div> -->
 
-                <div class="product-card-body">
-                    <span class="product-category">{{ product.category }}</span>
-                    <h3>{{ product.name }}</h3>
-                    <p>{{ product.description }}</p>
+                    <div class="product-card-body">
+                        <span class="product-category">{{ product.category }}</span>
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.description }}</p>
 
-                    <div class="product-card-footer">
-                        <strong>Rs. {{ product.price }}</strong>
-                        <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-small">
-                            Details
-                        </a>
+                        <div class="product-card-footer">
+                            <strong>Rs. {{ product.price }}</strong>
+                            <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-dark btn-small">
+                                Details
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </article>
-        {% endfor %}
-    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <h2>No products yet</h2>
+            <p>Add your first product from the admin product page.</p>
+            <a href="{{ url_for('main.add_product') }}" class="btn btn-primary">
+                Add Product
+            </a>
+        </div>
+    {% endif %}
 </section>
 
 {% endblock %}

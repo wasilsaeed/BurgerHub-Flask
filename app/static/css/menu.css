@@ -221,3 +221,33 @@
         min-height: auto;
     }
 }
+
+/* =========================
+   Empty State
+========================= */
+
+.empty-state {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 32px;
+    border: 1px solid rgba(255, 61, 0, 0.12);
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at top right, rgba(255, 209, 102, 0.22), transparent 34%),
+        var(--white);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.empty-state h2 {
+    margin: 0 0 12px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -1px;
+}
+
+.empty-state p {
+    max-width: 460px;
+    margin: 0 auto 24px;
+    color: var(--muted);
+    line-height: 1.7;
+}

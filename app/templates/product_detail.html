@@ -17,9 +17,9 @@
 
 {% if product %}
 <section class="product-detail">
-    <div class="product-detail-image">
-        {{ product.name[0] }}
-    </div>
+    <!-- <div class="product-detail-image"> -->
+          <img class="product-detail-image" src="{{product.image}}" alt="{{product.name}}">
+    <!-- </div> -->
 
     <div class="product-detail-content">
         <span class="product-category">{{ product.category }}</span>

@@ -124,10 +124,11 @@
     </div>
 
     <div class="product-grid">
+    {% if featured_products %}
         {% for product in featured_products %}
             <article class="product-card">
-                <div class="product-image-placeholder">
-                    {{ product.name[0] }}
+                <div class="product-image-placeholder" >
+                      <img src="{{product.image}}" alt="{{product.name}}">
                 </div>
 
                 <div class="product-card-body">
@@ -144,7 +145,16 @@
                 </div>
             </article>
         {% endfor %}
-    </div>
+    {% else %}
+        <div class="home-empty-featured">
+            <h3>No featured products yet</h3>
+            <p>Add products and mark them as featured to show them here.</p>
+            <a href="{{ url_for('main.add_product') }}" class="btn btn-primary">
+                Add Product
+            </a>
+        </div>
+    {% endif %}
+</div>
 </section>
 
 <section class="promo-section">
