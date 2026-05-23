@@ -2,9 +2,8 @@
 
 {% block title %}Checkout | BurgerHub{% endblock %}
 
-
 {% block style %}
-    <link rel="stylesheet" href="{{url_for('static', filename='css/checkout.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -12,7 +11,138 @@
 <section class="page-header">
     <p class="eyebrow">Checkout</p>
     <h1>Complete Your Order</h1>
-    <p>Checkout form and payment integration will be added in the next phase.</p>
+
+    {% if cart_items %}
+        <p>Enter your delivery details and review your order before placing it.</p>
+    {% else %}
+        <p>Your cart is empty. Add items from the menu before checkout.</p>
+    {% endif %}
+</section>
+
+<section class="checkout-wrapper">
+
+    {% if cart_items %}
+
+        <div class="checkout-layout">
+
+            <div class="checkout-form-card">
+                <p class="checkout-step">Step 1 of 1</p>
+                <h2>Delivery Details</h2>
+                <p class="checkout-card-text">
+                    Please provide accurate delivery information so we can prepare and deliver your order smoothly.
+                </p>
+
+                <form action="{{ url_for('main.place_order') }}" method="POST" class="checkout-form">
+
+                    <div class="form-group">
+                        <label for="customer_name">Full Name</label>
+                        <input
+                            type="text"
+                            id="customer_name"
+                            name="customer_name"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer_phone">Phone Number</label>
+                        <input
+                            type="tel"
+                            id="customer_phone"
+                            name="customer_phone"
+                            placeholder="Enter your phone number"
+                            autocomplete="tel"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer_address">Delivery Address</label>
+                        <textarea
+                            id="customer_address"
+                            name="customer_address"
+                            placeholder="House no, street, area, city"
+                            autocomplete="street-address"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="payment_method">Payment Method</label>
+                        <select id="payment_method" name="payment_method" required>
+                            <option value="cash_on_delivery">Cash on Delivery</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary checkout-submit-btn">
+                        Place Order
+                    </button>
+
+                </form>
+            </div>
+
+            <aside class="checkout-summary-card">
+                <p class="summary-topline">Your Order</p>
+                <h2>Order Summary</h2>
+
+                <div class="checkout-items">
+                    {% for item in cart_items %}
+                        <div class="checkout-item">
+                            <div class="checkout-item-info">
+                                <h3>{{ item.product.name }}</h3>
+                                <p>Qty: {{ item.quantity }}</p>
+                            </div>
+
+                            <span>Rs. {{ item.item_total }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <strong>Rs. {{ cart_total }}</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery</span>
+                    <strong>Rs. 0</strong>
+                </div>
+
+                <div class="summary-row total-row">
+                    <span>Total</span>
+                    <strong>Rs. {{ cart_total }}</strong>
+                </div>
+
+                <div class="checkout-note">
+                    Payment will be collected when your order is delivered.
+                </div>
+
+                <a href="{{ url_for('main.cart') }}" class="btn btn-secondary back-cart-btn">
+                    Back to Cart
+                </a>
+            </aside>
+
+        </div>
+
+    {% else %}
+
+        <div class="checkout-empty-card">
+            <h2>Your cart is empty</h2>
+            <p>Please add items to your cart before proceeding to checkout.</p>
+
+            <div class="checkout-actions">
+                <a href="{{ url_for('main.menu') }}" class="btn btn-primary">
+                    Explore Menu
+                </a>
+            </div>
+        </div>
+
+    {% endif %}
+
 </section>
 
 {% endblock %}

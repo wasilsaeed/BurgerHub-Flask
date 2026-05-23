@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed | BurgerHub{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/checkout_success.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="success-wrapper">
+
+    <div class="success-card">
+
+        <div class="success-icon" aria-hidden="true">
+            ✓
+        </div>
+
+        <p class="eyebrow">Order Confirmed</p>
+
+        <h1>Thank you for your order</h1>
+
+        <p class="success-message">
+            Your order has been placed successfully. Our team will start preparing your meal shortly.
+        </p>
+
+        {% if order %}
+            <div class="order-info-card">
+                <div class="order-info-row">
+                    <span>Order ID</span>
+                    <strong>#{{ order.id }}</strong>
+                </div>
+
+                <div class="order-info-row">
+                    <span>Status</span>
+                    <strong>{{ order.status }}</strong>
+                </div>
+
+                <div class="order-info-row">
+                    <span>Total Amount</span>
+                    <strong>Rs. {{ order.total_amount }}</strong>
+                </div>
+
+                <div class="order-info-row">
+                    <span>Payment Method</span>
+                    <strong>
+                        {% if order.payment_method == "cash_on_delivery" %}
+                            Cash on Delivery
+                        {% else %}
+                            {{ order.payment_method }}
+                        {% endif %}
+                    </strong>
+                </div>
+            </div>
+
+            <div class="delivery-card">
+                <h2>Delivery Details</h2>
+
+                <div class="delivery-detail">
+                    <span>Name</span>
+                    <strong>{{ order.customer_name }}</strong>
+                </div>
+
+                <div class="delivery-detail">
+                    <span>Phone</span>
+                    <strong>{{ order.customer_phone }}</strong>
+                </div>
+
+                <div class="delivery-detail address-detail">
+                    <span>Address</span>
+                    <strong>{{ order.customer_address }}</strong>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="success-actions">
+            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">
+                Continue Shopping
+            </a>
+
+            <a href="{{ url_for('main.home') }}" class="btn btn-secondary">
+                Back to Home
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

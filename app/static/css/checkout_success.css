@@ -1,0 +1,281 @@
+/* =========================
+   Checkout Success Page
+========================= */
+
+.success-wrapper {
+    position: relative;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 82px 24px 110px;
+}
+
+.success-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    width: 520px;
+    height: 520px;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle, rgba(255, 61, 0, 0.14), transparent 64%);
+    filter: blur(40px);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.success-card {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 54px;
+    border: 1px solid rgba(17, 17, 17, 0.08);
+    border-radius: 42px;
+    background:
+        radial-gradient(circle at top right, rgba(255, 183, 3, 0.22), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 247, 237, 0.86));
+    box-shadow: 0 34px 100px rgba(17, 17, 17, 0.13);
+    overflow: hidden;
+    text-align: center;
+}
+
+.success-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 54px;
+    width: 96px;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--primary), #ffb703);
+}
+
+.success-card::after {
+    content: "🍔";
+    position: absolute;
+    right: 34px;
+    bottom: 26px;
+    font-size: 6rem;
+    line-height: 1;
+    opacity: 0.07;
+    pointer-events: none;
+}
+
+.success-icon {
+    display: grid;
+    place-items: center;
+    width: 112px;
+    height: 112px;
+    margin: 0 auto 24px;
+    border-radius: 34px;
+    background:
+        linear-gradient(135deg, var(--primary), #ffb703);
+    color: var(--white);
+    font-size: 4rem;
+    font-weight: 950;
+    box-shadow:
+        0 22px 48px rgba(255, 61, 0, 0.25),
+        inset 0 0 0 8px rgba(255, 255, 255, 0.18);
+}
+
+.success-card .eyebrow {
+    margin-bottom: 10px;
+}
+
+.success-card h1 {
+    max-width: 680px;
+    margin: 0 auto 16px;
+    color: var(--dark);
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    font-weight: 950;
+    letter-spacing: -2.4px;
+    line-height: 0.98;
+}
+
+.success-message {
+    max-width: 610px;
+    margin: 0 auto 34px;
+    color: var(--muted);
+    font-size: 1.08rem;
+    font-weight: 650;
+    line-height: 1.75;
+}
+
+
+/* =========================
+   Order Info
+========================= */
+
+.order-info-card {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 34px 0 18px;
+    text-align: left;
+}
+
+.order-info-row {
+    padding: 18px;
+    border: 1px solid rgba(17, 17, 17, 0.07);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.76);
+    box-shadow: 0 14px 34px rgba(17, 17, 17, 0.06);
+}
+
+.order-info-row span,
+.delivery-detail span {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--muted);
+    font-size: 0.76rem;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.order-info-row strong,
+.delivery-detail strong {
+    color: var(--dark);
+    font-size: 1.04rem;
+    font-weight: 950;
+    line-height: 1.45;
+}
+
+.order-info-row:first-child strong,
+.order-info-row:nth-child(3) strong {
+    color: var(--primary);
+}
+
+
+/* =========================
+   Delivery Details
+========================= */
+
+.delivery-card {
+    margin-top: 16px;
+    padding: 24px;
+    border: 1px solid rgba(255, 61, 0, 0.12);
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(255, 247, 237, 0.76), rgba(255, 255, 255, 0.78));
+    text-align: left;
+}
+
+.delivery-card h2 {
+    margin: 0 0 18px;
+    color: var(--dark);
+    font-size: 1.45rem;
+    font-weight: 950;
+    letter-spacing: -0.7px;
+}
+
+.delivery-detail {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 18px;
+    padding: 15px 0;
+    border-top: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.delivery-detail:first-of-type {
+    border-top: none;
+}
+
+.delivery-detail span {
+    margin-bottom: 0;
+}
+
+.address-detail strong {
+    white-space: normal;
+}
+
+
+/* =========================
+   Actions
+========================= */
+
+.success-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 34px;
+}
+
+.success-actions .btn {
+    min-width: 190px;
+    min-height: 54px;
+    justify-content: center;
+    border-radius: 999px;
+    font-weight: 950;
+}
+
+.success-actions .btn-primary {
+    box-shadow: 0 18px 34px rgba(255, 61, 0, 0.22);
+}
+
+
+/* =========================
+   Responsive Design
+========================= */
+
+@media (max-width: 760px) {
+    .success-wrapper {
+        padding: 58px 16px 82px;
+    }
+
+    .success-card {
+        padding: 38px 24px;
+        border-radius: 34px;
+    }
+
+    .success-card::before {
+        left: 28px;
+    }
+
+    .success-icon {
+        width: 92px;
+        height: 92px;
+        border-radius: 28px;
+        font-size: 3.2rem;
+    }
+
+    .order-info-card {
+        grid-template-columns: 1fr;
+    }
+
+    .delivery-detail {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .success-actions {
+        flex-direction: column;
+    }
+
+    .success-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 460px) {
+    .success-card {
+        padding: 32px 18px;
+    }
+
+    .success-card h1 {
+        font-size: 2.25rem;
+        letter-spacing: -1.4px;
+    }
+
+    .success-message {
+        font-size: 1rem;
+    }
+
+    .delivery-card {
+        padding: 20px;
+        border-radius: 24px;
+    }
+}

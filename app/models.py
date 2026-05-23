@@ -17,3 +17,35 @@ class Product(db.Model):
 
     def __repr__(self):
         return f"Product {self.name}"
+    
+class Order(db.Model):
+    __tablename__ = "orders"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    customer_name = db.Column(db.String(120), nullable=False)
+    customer_phone = db.Column(db.String(50), nullable=False)
+    customer_address = db.Column(db.Text, nullable=False)
+
+    payment_method = db.Column(db.String(50), default="cash_on_delivery")
+    total_amount = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.String(50), default="Pending")
+
+    items = db.relationship(
+        "OrderItem",
+        backref="order",
+        lazy=True,
+        cascade="all, delete-orphan"
+    )
+class OrderItem(db.Model):
+    __tablename__ = "order_items"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
+
+    product_name = db.Column(db.String(150), nullable=False)
+    product_price = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    item_total = db.Column(db.Integer, nullable=False)

@@ -1,29 +1,174 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Cart | BurgerHub{% endblock %} {%
+block style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/cart.css') }}"
+/>
+{% endblock %} {% block content %}
 
-{% block title %}Cart | BurgerHub{% endblock %}
-
-{% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/cart.css') }}">
-{% endblock %}
-
-{% block content %}
-
-<section class="page-header">
+<section class="cart-hero">
+  <div>
     <p class="eyebrow">Your Cart</p>
     <h1>Review Your Order</h1>
-    <p>Your selected items will appear here once cart functionality is added.</p>
+    {% if cart_items %}
+    <p>
+      Fine-tune your meal, confirm the details, and move smoothly to checkout.
+    </p>
+    {% else %}
+    <p>
+      Your selected items will appear here once you add products from the menu.
+    </p>
+    {% endif %}
+  </div>
+
+  {% if cart_items %}
+  <div class="cart-hero-badge" aria-label="Cart total">
+    <span>Cart Total</span>
+    <strong>Rs. {{ cart_total }}</strong>
+  </div>
+  {% endif %}
 </section>
 
 <section class="cart-wrapper">
-    <div class="cart-empty-card">
-        <h2>Your cart is empty</h2>
-        <p>Start exploring the menu and add your favorite meals to the cart.</p>
+  {% if cart_items %}
 
-        <div class="cart-actions">
-            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">Explore Menu</a>
-            <a href="{{ url_for('main.checkout') }}" class="btn btn-secondary">Go to Checkout</a>
-        </div>
+  <div class="cart-layout">
+    <div class="cart-items-panel">
+      <div class="cart-section-heading">
+        <span>Selected Items</span>
+        <strong
+          >{{ cart_items|length }} item{% if cart_items|length != 1 %}s{% endif
+          %}</strong
+        >
+      </div>
+
+      <div class="cart-items">
+        {% for item in cart_items %}
+        <article class="cart-item-card">
+          <div class="cart-item-image">
+            {% if item.product.image %}
+            <img src="{{ item.product.image }}" alt="{{ item.product.name }}" />
+            {% else %}
+            <img
+              src="{{ url_for('static', filename='images/placeholder.png') }}"
+              alt="{{ item.product.name }}"
+            />
+            {% endif %}
+          </div>
+
+          <div class="cart-item-info">
+            <span class="cart-item-category">{{ item.product.category }}</span>
+            <h2>{{ item.product.name }}</h2>
+            <p>{{ item.product.description }}</p>
+          </div>
+
+          <div class="cart-item-meta cart-item-price">
+            <span>Price</span>
+            <strong>Rs. {{ item.product.price }}</strong>
+          </div>
+
+          <div class="cart-item-quantity">
+            <div class="cart-item-quantity">
+              <form
+                class="auto-update-cart-form"
+                action="{{ url_for('main.update_cart', product_id=item.product.id) }}"
+                method="POST"
+              >
+                <label for="quantity-{{ item.product.id }}">Quantity</label>
+
+                <div class="quantity-control">
+                  <input
+                    id="quantity-{{ item.product.id }}"
+                    class="cart-qty-input"
+                    type="number"
+                    name="quantity"
+                    value="{{ item.quantity }}"
+                    min="1"
+                    inputmode="numeric"
+                    aria-label="Quantity for {{ item.product.name }}"
+                  />
+                </div>
+                
+              </form>
+
+              <div class="cart-item-remove">
+    <form action="{{ url_for('main.remove_from_cart', product_id=item.product.id) }}" method="POST">
+        <button type="submit" class="remove-btn" aria-label="Remove {{ item.product.name }} from cart">
+            Remove
+        </button>
+    </form>
+</div>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
     </div>
+
+    <aside class="cart-summary-card" aria-label="Order summary">
+      <div class="summary-topline">Secure Checkout</div>
+      <h2>Order Summary</h2>
+
+      <div class="summary-list">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong>Rs. {{ cart_total }}</strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Delivery</span>
+          <strong>Rs. 0</strong>
+        </div>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-row total-row">
+        <span>Total</span>
+        <strong>Rs. {{ cart_total }}</strong>
+      </div>
+
+      <div class="summary-note">
+        Delivery charges and offers can be confirmed on checkout.
+      </div>
+
+      <div class="cart-actions">
+        <a
+          href="{{ url_for('main.checkout') }}"
+          class="btn btn-primary checkout-btn"
+        >
+          Proceed to Checkout
+        </a>
+
+        <a href="{{ url_for('main.menu') }}" class="btn btn-secondary">
+          Add More Items
+        </a>
+
+        <form action="{{ url_for('main.clear_cart') }}" method="POST">
+          <button type="submit" class="btn btn-danger">Clear Cart</button>
+        </form>
+      </div>
+    </aside>
+  </div>
+
+  {% else %}
+
+  <div class="cart-empty-card">
+    <div class="empty-icon" aria-hidden="true">🛒</div>
+    <p class="eyebrow">Empty Cart</p>
+    <h2>Your cart is empty</h2>
+    <p>Start exploring the menu and add your favorite meals to the cart.</p>
+
+    <div class="cart-actions">
+      <a href="{{ url_for('main.menu') }}" class="btn btn-primary">
+        Explore Menu
+      </a>
+    </div>
+  </div>
+
+  {% endif %}
 </section>
 
 {% endblock %}
+<script src="{{ url_for('static', filename='js/cart.js')}}"></script>
+{% block script %} {% endblock %}
