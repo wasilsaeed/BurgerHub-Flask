@@ -1,0 +1,168 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Products | BurgerHub Admin{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/products.css') }}">
+{% endblock %}
+
+{% block page_title %}Products{% endblock %}
+
+{% block content %}
+
+<div class="products-header">
+    <div>
+        <h2>Manage Products</h2>
+        <p>Add, edit, and manage your BurgerHub menu items.</p>
+    </div>
+
+    <button type="button" class="btn btn-primary add-product-btn" id="openAddProductModal">
+    + Add Product
+</button>
+</div>
+
+<div class="products-card">
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th class="actions-col">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>${{ product.price }}</td>
+                <td><span class="status active">Active</span></td>
+                <td class="actions">
+                    <a href="#">Edit</a>
+                    <a href="#" class="delete">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="empty-row">No products found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal-overlay" id="addProductModal">
+    <div class="modal-card">
+
+        <div class="modal-header">
+            <div>
+                <p class="eyebrow">Admin</p>
+                <h2>Add New Product</h2>
+                <span>Create a new menu item and publish it to the frontend menu.</span>
+            </div>
+
+            <button type="button" class="modal-close" id="closeAddProductModal">
+                &times;
+            </button>
+        </div>
+
+        <form class="modal-form" method="POST" action="{{ url_for('admin.add_product') }}">
+
+            <div class="form-grid two-columns">
+                <div class="form-group">
+                    <label for="modal-name">Product Name *</label>
+                    <input type="text" id="modal-name" name="name" placeholder="Classic Beef Burger" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modal-category">Category *</label>
+                    <select id="modal-category" name="category" required>
+                        <option value="">Select category</option>
+                        <option value="Burgers">Burgers</option>
+                        <option value="Sides">Sides</option>
+                        <option value="Drinks">Drinks</option>
+                        <option value="Deals">Deals</option>
+                        <option value="Desserts">Desserts</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-grid two-columns">
+                <div class="form-group">
+                    <label for="modal-price">Price *</label>
+                    <input type="number" id="modal-price" name="price" placeholder="799" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modal-image">Image Filename</label>
+                    <input type="text" id="modal-image" name="image" placeholder="burger.jpg">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="modal-description">Description *</label>
+                <textarea id="modal-description" name="description" rows="5" placeholder="Write a short product description..." required></textarea>
+            </div>
+
+            <div class="form-options">
+                <label class="checkbox-field">
+                    <input type="checkbox" name="is_featured">
+                    <span>
+                        <strong>Featured Product</strong>
+                        <small>Show this product on homepage highlights.</small>
+                    </span>
+                </label>
+
+                <label class="checkbox-field">
+                    <input type="checkbox" name="is_available" checked>
+                    <span>
+                        <strong>Available on Menu</strong>
+                        <small>Customers can order this product.</small>
+                    </span>
+                </label>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" id="cancelAddProductModal">
+                    Cancel
+                </button>
+
+                <button type="submit" class="btn btn-primary">
+                    Save Product
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    const addProductModal = document.getElementById("addProductModal");
+    const openAddProductModal = document.getElementById("openAddProductModal");
+    const closeAddProductModal = document.getElementById("closeAddProductModal");
+    const cancelAddProductModal = document.getElementById("cancelAddProductModal");
+
+    openAddProductModal.addEventListener("click", () => {
+        addProductModal.classList.add("show");
+        document.body.classList.add("modal-open");
+    });
+
+    function closeModal() {
+        addProductModal.classList.remove("show");
+        document.body.classList.remove("modal-open");
+    }
+
+    closeAddProductModal.addEventListener("click", closeModal);
+    cancelAddProductModal.addEventListener("click", closeModal);
+
+    addProductModal.addEventListener("click", (event) => {
+        if (event.target === addProductModal) {
+            closeModal();
+        }
+    });
+</script>
+{% endblock %}

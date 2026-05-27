@@ -1,0 +1,1 @@
+console.log("BurgerHub Admin Panel Loaded");

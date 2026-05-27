@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Privacy Policy | BurgerHub{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/legal.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="legal-hero">
+    <p class="eyebrow">Privacy Policy</p>
+    <h1>Your Privacy Matters</h1>
+    <p>
+        At BurgerHub, we respect your personal information and use it only to improve
+        your ordering experience.
+    </p>
+</section>
+
+<section class="legal-layout">
+    <aside class="legal-sidebar">
+        <a href="#info">Information We Collect</a>
+        <a href="#use">How We Use It</a>
+        <a href="#security">Data Security</a>
+        <a href="#rights">Your Choices</a>
+        <a href="#contact">Contact</a>
+    </aside>
+
+    <div class="legal-content">
+        <article id="info" class="legal-card">
+            <span>01</span>
+            <h2>Information We Collect</h2>
+            <p>
+                We may collect your name, phone number, delivery address, order details,
+                and payment preference when you place an order.
+            </p>
+        </article>
+
+        <article id="use" class="legal-card">
+            <span>02</span>
+            <h2>How We Use Your Information</h2>
+            <p>
+                Your information is used to process orders, provide delivery updates,
+                improve our menu, and offer a smoother customer experience.
+            </p>
+        </article>
+
+        <article id="security" class="legal-card">
+            <span>03</span>
+            <h2>Data Security</h2>
+            <p>
+                We take reasonable steps to protect your data from unauthorized access,
+                misuse, or disclosure.
+            </p>
+        </article>
+
+        <article id="rights" class="legal-card">
+            <span>04</span>
+            <h2>Your Choices</h2>
+            <p>
+                You can contact us to update, correct, or request removal of your personal
+                information where applicable.
+            </p>
+        </article>
+
+        <article id="contact" class="legal-card highlight-card">
+            <span>05</span>
+            <h2>Contact Us</h2>
+            <p>
+                For privacy-related questions, please contact BurgerHub support through
+                our contact page.
+            </p>
+
+            <a href="{{ url_for('main.contact') }}" class="btn btn-primary">Contact Support</a>
+        </article>
+    </div>
+</section>
+
+{% endblock %}

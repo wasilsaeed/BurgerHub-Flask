@@ -22,7 +22,6 @@
           <li><a href="{{ url_for('main.menu') }}">Menu</a></li>
           <li><a href="{{ url_for('main.about') }}">About</a></li>
           <li><a href="{{ url_for('main.contact') }}">Contact</a></li>
-          <li><a href="{{ url_for('main.add_product') }}">Add Product</a></li>
           <li>
             <a href="{{ url_for('main.cart') }}" class="cart-link">
               Cart {% if session.get("cart") %}
@@ -82,7 +81,7 @@
             <li><a href="{{ url_for('main.menu') }}">View Menu</a></li>
             <li><a href="{{ url_for('main.cart') }}">Your Cart</a></li>
             <li><a href="{{ url_for('main.checkout') }}">Checkout</a></li>
-            <li><a href="#">Track Order</a></li>
+            <li><a href="{{ url_for('main.track_order')}}">Track Order</a></li>
           </ul>
         </div>
 
@@ -101,8 +100,8 @@
         <p>&copy; 2026 BurgerHub. All rights reserved.</p>
 
         <div class="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
+          <a href="{{ url_for('main.privacy') }}">Privacy Policy</a>
+          <a href="{{ url_for('main.terms') }}">Terms of Service</a>
         </div>
       </div>
     </footer>

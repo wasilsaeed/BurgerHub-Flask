@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Terms & Conditions | BurgerHub{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/legal.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="legal-hero">
+    <p class="eyebrow">Terms & Conditions</p>
+    <h1>Using BurgerHub</h1>
+    <p>
+        These terms explain how customers should use our website, ordering system,
+        and food delivery services.
+    </p>
+</section>
+
+<section class="legal-layout">
+    <aside class="legal-sidebar">
+        <a href="#orders">Orders</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#delivery">Delivery</a>
+        <a href="#cancellations">Cancellations</a>
+        <a href="#responsibility">Responsibility</a>
+    </aside>
+
+    <div class="legal-content">
+        <article id="orders" class="legal-card">
+            <span>01</span>
+            <h2>Orders</h2>
+            <p>
+                Customers are responsible for providing accurate order details, phone
+                numbers, and delivery addresses before submitting an order.
+            </p>
+        </article>
+
+        <article id="pricing" class="legal-card">
+            <span>02</span>
+            <h2>Pricing & Availability</h2>
+            <p>
+                Menu prices, deals, and product availability may change without prior
+                notice. Unavailable items may be removed from orders.
+            </p>
+        </article>
+
+        <article id="delivery" class="legal-card">
+            <span>03</span>
+            <h2>Delivery</h2>
+            <p>
+                Delivery times are estimates and may vary based on order volume, weather,
+                location, or other operational factors.
+            </p>
+        </article>
+
+        <article id="cancellations" class="legal-card">
+            <span>04</span>
+            <h2>Cancellations & Refunds</h2>
+            <p>
+                Cancellation requests may only be accepted before food preparation begins.
+                Refund decisions depend on order status and restaurant policy.
+            </p>
+        </article>
+
+        <article id="responsibility" class="legal-card highlight-card">
+            <span>05</span>
+            <h2>Customer Responsibility</h2>
+            <p>
+                By using BurgerHub, you agree to use the website responsibly and provide
+                accurate information during checkout.
+            </p>
+
+            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">Browse Menu</a>
+        </article>
+    </div>
+</section>
+
+{% endblock %}

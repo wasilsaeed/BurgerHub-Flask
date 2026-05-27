@@ -1,0 +1,114 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Orders{% endblock %}
+{% block page_title %}Orders{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/orders.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="orders-summary">
+    <div class="summary-card">
+        <span>Total Orders</span>
+        <h3>{{ orders|length if orders else 0 }}</h3>
+    </div>
+
+    <div class="summary-card warning">
+        <span>Pending</span>
+        <h3>{{ pending_count if pending_count is defined else 0 }}</h3>
+    </div>
+
+    <div class="summary-card info">
+        <span>Preparing</span>
+        <h3>{{ preparing_count if preparing_count is defined else 0 }}</h3>
+    </div>
+
+    <div class="summary-card success">
+        <span>Delivered</span>
+        <h3>{{ delivered_count if delivered_count is defined else 0 }}</h3>
+    </div>
+</div>
+
+<div class="orders-panel">
+    <div class="panel-header">
+        <div>
+            <h2>Recent Orders</h2>
+            <p>Monitor customer orders, payment status, and preparation flow.</p>
+        </div>
+
+        <select class="filter-select">
+            <option>All Orders</option>
+            <option>Pending</option>
+            <option>Preparing</option>
+            <option>Delivered</option>
+            <option>Cancelled</option>
+        </select>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>
+                        <strong>#{{ order.id }}</strong>
+                    </td>
+
+                    <td>
+                        <div class="customer-cell">
+                            <div class="avatar">{{ order.customer_name[0] }}</div>
+                            <div>
+                                <strong>{{ order.customer_name }}</strong>
+                                <span>{{ order.customer_phone }}</span>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>{{ order.items|length if order.items else 0 }}</td>
+
+                    <td>
+                        <strong>${{ "%.2f"|format(order.total_amount if order.total_amount else 0) }}</strong>
+                    </td>
+
+                    <td>
+                        <span class="payment-badge">
+                            {{ order.payment_method|replace("_", " ")|title }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="order-status {{ order.status|lower if order.status else 'pending' }}">
+                            {{ order.status if order.status else "Pending" }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">
+                        <div class="empty-state">
+                            <div class="empty-icon">🍔</div>
+                            <h3>No orders yet</h3>
+                            <p>New customer orders will appear here once they are placed.</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

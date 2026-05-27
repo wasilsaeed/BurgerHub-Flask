@@ -1,0 +1,118 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Settings{% endblock %}
+{% block page_title %}Settings{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/settings.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" class="settings-layout">
+
+    <div class="settings-sidebar">
+        <a href="#restaurant" class="settings-link active">Restaurant Profile</a>
+        <a href="#orders" class="settings-link">Order Settings</a>
+        <a href="#account" class="settings-link">Admin Account</a>
+    </div>
+
+    <div class="settings-content">
+
+        <section class="settings-card" id="restaurant">
+            <div class="card-header">
+                <h2>Restaurant Profile</h2>
+                <p>Information displayed across your BurgerHub platform.</p>
+            </div>
+
+            <div class="form-grid two-columns">
+                <div class="form-group">
+                    <label>Restaurant Name</label>
+                    <input type="text" name="restaurant_name" value="BurgerHub">
+                </div>
+
+                <div class="form-group">
+                    <label>Support Email</label>
+                    <input type="email" name="support_email" value="support@burgerhub.com">
+                </div>
+            </div>
+
+            <div class="form-grid two-columns">
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" name="phone" value="+1 555 123 4567">
+                </div>
+
+                <div class="form-group">
+                    <label>Opening Hours</label>
+                    <input type="text" name="hours" value="10:00 AM - 11:00 PM">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Restaurant Address</label>
+                <textarea name="address" rows="4">123 Burger Street, Food City</textarea>
+            </div>
+        </section>
+
+        <section class="settings-card" id="orders">
+            <div class="card-header">
+                <h2>Order Settings</h2>
+                <p>Configure delivery, pickup, and order availability.</p>
+            </div>
+
+            <div class="toggle-list">
+                <label class="toggle-item">
+                    <input type="checkbox" checked>
+                    <span>
+                        <strong>Accept Online Orders</strong>
+                        <small>Allow customers to place orders from the website.</small>
+                    </span>
+                </label>
+
+                <label class="toggle-item">
+                    <input type="checkbox" checked>
+                    <span>
+                        <strong>Enable Delivery</strong>
+                        <small>Customers can choose delivery during checkout.</small>
+                    </span>
+                </label>
+
+                <label class="toggle-item">
+                    <input type="checkbox" checked>
+                    <span>
+                        <strong>Enable Pickup</strong>
+                        <small>Customers can collect orders from the restaurant.</small>
+                    </span>
+                </label>
+            </div>
+        </section>
+
+        <section class="settings-card" id="account">
+            <div class="card-header">
+                <h2>Admin Account</h2>
+                <p>Update basic admin profile information.</p>
+            </div>
+
+            <div class="form-grid two-columns">
+                <div class="form-group">
+                    <label>Admin Name</label>
+                    <input type="text" name="admin_name" value="Admin">
+                </div>
+
+                <div class="form-group">
+                    <label>Admin Email</label>
+                    <input type="email" name="admin_email" value="admin@burgerhub.com">
+                </div>
+            </div>
+        </section>
+
+        <div class="settings-actions">
+            <button type="submit" class="btn-primary">Save Settings</button>
+        </div>
+
+    </div>
+
+</form>
+
+{% endblock %}

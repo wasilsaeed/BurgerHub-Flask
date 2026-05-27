@@ -9,14 +9,14 @@
 
 {% block content %}
 
-<section class="page-header">
-    <p class="eyebrow">Our Menu</p>
-    <h1>Choose Your Favorite Meal</h1>
-    <p>Freshly prepared meals, sides, and drinks for every craving.</p>
-</section>
-
 <section class="section">
     {% if products %}
+    
+    <section class="page-header">
+        <p class="eyebrow">Our Menu</p>
+        <h1>Choose Your Favorite Meal</h1>
+        <p>Freshly prepared meals, sides, and drinks for every craving.</p>
+    </section>
         <div class="product-grid">
             {% for product in products %}
                 <article class="product-card">
@@ -41,11 +41,8 @@
         </div>
     {% else %}
         <div class="empty-state">
-            <h2>No products yet</h2>
-            <p>Add your first product from the admin product page.</p>
-            <a href="{{ url_for('main.add_product') }}" class="btn btn-primary">
-                Add Product
-            </a>
+            <h2>No products available yet</h2>
+            <p>Please check back soon. New menu items are being added.</p>
         </div>
     {% endif %}
 </section>

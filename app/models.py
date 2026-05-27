@@ -1,7 +1,6 @@
 from app import db
 from datetime import datetime
 
-
 class Product(db.Model):
     __tablename__ = "products"
 
@@ -49,3 +48,19 @@ class OrderItem(db.Model):
     product_price = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     item_total = db.Column(db.Integer, nullable=False)
+
+
+class ContactMessage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(150), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class DiscountCode(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), nullable=False)
+    code = db.Column(db.String(30), unique=True, nullable=False)
+    used = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)

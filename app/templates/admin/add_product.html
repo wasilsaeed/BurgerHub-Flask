@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Add Product | BurgerHub{% endblock %}
+{% block title %}Add Product | BurgerHub Admin{% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/add_product.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/add_product.css') }}">
 {% endblock %}
+
+{% block page_title %}Add Product{% endblock %}
+
 
 {% block content %}
 

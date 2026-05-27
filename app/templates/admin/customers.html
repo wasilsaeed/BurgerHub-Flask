@@ -1,0 +1,79 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Customers{% endblock %}
+{% block page_title %}Customers{% endblock %}
+{% block page_subtitle %}Manage customer profiles, activity, and loyalty insights{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/customers.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="customers-overview">
+    <div class="overview-card">
+        <span>Total Customers</span>
+        <h3>{{ customers|length if customers else 0 }}</h3>
+    </div>
+
+    <div class="overview-card">
+        <span>Active Customers</span>
+        <h3>{{ customers|length if customers else 0 }}</h3>
+    </div>
+
+    <div class="overview-card">
+        <span>Loyalty Members</span>
+        <h3>24</h3>
+    </div>
+</div>
+
+<div class="customers-panel">
+    <div class="panel-header">
+        <div>
+            <h2>Customer List</h2>
+            <p>View customer details and purchase activity</p>
+        </div>
+
+        <input type="text" placeholder="Search customers..." class="search-input">
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Orders</th>
+                    <th>Total Spent</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>
+                        <div class="customer-profile">
+                            <div class="avatar">{{ customer.name[0] }}</div>
+                            <div>
+                                <strong>{{ customer.name }}</strong>
+                                <span>ID: #{{ customer.id }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.orders if customer.orders else 0 }}</td>
+                    <td>${{ "%.2f"|format(customer.spent if customer.spent else 0) }}</td>
+                    <td><span class="status-badge active">Active</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="empty-state">No customers found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

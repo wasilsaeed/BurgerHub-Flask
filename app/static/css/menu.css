@@ -156,6 +156,10 @@
     min-height: 82px;
     color: var(--muted);
     line-height: 1.65;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
 }
 
 .product-card-footer {

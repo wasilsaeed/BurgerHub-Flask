@@ -1,27 +1,54 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify
+import secrets
 
 from app import db
-from app.models import Product, OrderItem, Order
+from app.models import Product, OrderItem, Order, ContactMessage, DiscountCode
 
 main = Blueprint("main", __name__)
 
 
-# ====================
-## HOME PAGE ROUTE
-# ====================
 
-@main.route("/")
+@main.route("/", methods=["GET"])
 def home():
-    # featured_products = [product for product in products if product["is_featured"]]
-    featured_products = Product.query.filter_by(
-        is_available = True,
-        is_featured = True
-    ).limit(4).all()
-    return render_template('index.html', featured_products=featured_products)
+    items_count = Product.query.count()
 
-# ====================
-## MENU PAGE ROUTE
-# ====================
+    featured_products = Product.query.filter_by(
+        is_available=True,
+        is_featured=True,
+    ).limit(4).all()
+
+    return render_template(
+        "index.html",
+        featured_products=featured_products,
+        count=items_count
+    )
+
+@main.route("/claim-discount", methods=["POST"])
+def claim_discount():
+    email = request.form.get("email", "").strip().lower()
+
+    if not email:
+        return jsonify({
+            "success": False,
+            "message": "Email is required"
+        }), 400
+
+    code = "BURGER-" + secrets.token_hex(3).upper()
+
+    discount = DiscountCode(
+        email=email,
+        code=code,
+        used=False
+    )
+
+    db.session.add(discount)
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "message": "Discount claimed successfully!",
+        "code": code
+    })
 
 @main.route("/menu")
 def menu():
@@ -30,104 +57,45 @@ def menu():
     ).order_by(
         Product.created_at.desc()
     ).all()
+
     return render_template("menu.html", products=products)
 
-# ====================
-## PRODUCT DETAILS ROUTE
-# ====================
 
 @main.route("/product/<int:product_id>")
 def product_detail(product_id):
-    # product = next((item for item in products if item["id"] == product_id), None)
     product = Product.query.get_or_404(product_id)
     return render_template("product_detail.html", product=product)
 
-# ====================
-## ADD PRODUCT ROUTE
-# ====================
 
-@main.route("/admin/products/add", methods=["GET", "POST"])
-def add_product():
-    if request.method == "POST":
-        name = request.form.get("name", "").strip()
-        category = request.form.get("category", "").strip()
-        price = request.form.get("price", "").strip()
-        image = request.form.get("image", "").strip()
-        description = request.form.get("description", "").strip()
-        is_featured = request.form.get("is_featured") == "on"
-        is_available = request.form.get("is_available") == "on"
-
-        if not name or not category or not price or not description:
-            flash("Please fill in all required fields.", "error")
-            return redirect(url_for("main.add_product"))
-
-        try:
-            price = int(price)
-        except ValueError:
-            flash("Price must be a valid number.", "error")
-            return redirect(url_for("main.add_product"))
-
-        product = Product(
-            name=name,
-            category=category,
-            price=price,
-            image=image,
-            description=description,
-            is_featured=is_featured,
-            is_available=is_available,
-        )
-
-        db.session.add(product)
-        db.session.commit()
-
-        flash("Product added successfully.", "success")
-        return redirect(url_for("main.menu"))
-
-    return render_template("add_product.html")
-
-# ====================
-## ADD TO CART ROUTE
-# ====================
-
-@main.route("/add_to_cart/<int:product_id>", methods=["POST"])
+@main.route("/add-to-cart/<int:product_id>", methods=["POST"])
 def add_to_cart(product_id):
     product = Product.query.get_or_404(product_id)
 
     if not product.is_available:
         flash("This product is currently unavailable.", "warning")
-        return redirect(request.referrer or url_for('menu'))
+        return redirect(request.referrer or url_for("main.menu"))
 
     cart = session.get("cart", {})
-
     product_id = str(product_id)
 
-    if product_id in cart:
-        cart[product_id] += 1
-    else:
-        cart[product_id] = 1
+    cart[product_id] = cart.get(product_id, 0) + 1
 
     session["cart"] = cart
     session.modified = True
 
     flash(f"{product.name} added to cart.", "success")
-    return redirect(request.referrer or url_for("menu"))
+    return redirect(request.referrer or url_for("main.menu"))
 
-
-
-# =====================
-## CART ROUTES
-# =====================
 
 def get_cart_items():
     cart = session.get("cart", {})
-
     cart_items = []
     cart_total = 0
 
     for product_id, quantity in cart.items():
         product = Product.query.get(int(product_id))
 
-        if product:
+        if product and product.is_available:
             item_total = product.price * quantity
             cart_total += item_total
 
@@ -150,12 +118,16 @@ def cart():
         cart_total=cart_total
     )
 
-@main.route("/update_cart/<int:product_id>", methods=["POST"])
-def update_cart(product_id):
-    quantity = int(request.form.get("quantity", 1))
 
+@main.route("/update-cart/<int:product_id>", methods=["POST"])
+def update_cart(product_id):
     cart = session.get("cart", {})
     product_id = str(product_id)
+
+    try:
+        quantity = int(request.form.get("quantity", 1))
+    except ValueError:
+        quantity = 1
 
     if product_id in cart:
         if quantity <= 0:
@@ -169,19 +141,20 @@ def update_cart(product_id):
     flash("Cart updated successfully.", "success")
     return redirect(url_for("main.cart"))
 
+
 @main.route("/remove-from-cart/<int:product_id>", methods=["POST"])
 def remove_from_cart(product_id):
     cart = session.get("cart", {})
     product_id = str(product_id)
 
-    if product_id in cart:
-        cart.pop(product_id)
+    cart.pop(product_id, None)
 
     session["cart"] = cart
     session.modified = True
 
     flash("Product removed from cart.", "info")
     return redirect(url_for("main.cart"))
+
 
 @main.route("/clear-cart", methods=["POST"])
 def clear_cart():
@@ -190,20 +163,10 @@ def clear_cart():
     flash("Cart cleared.", "info")
     return redirect(url_for("main.cart"))
 
-# =====================
-## CHECKOUT ROUTE
-# =====================
 
 @main.route("/checkout")
 def checkout():
     cart_items, cart_total = get_cart_items()
-
-    if not cart_items:
-        return render_template(
-            "checkout.html",
-            cart_items=cart_items,
-            cart_total=cart_total
-        )
 
     return render_template(
         "checkout.html",
@@ -212,10 +175,7 @@ def checkout():
     )
 
 
-# ====================
-## PLACE ORDER ROUTE
-# ===================
-@main.route("/place-order", methods=["GET", "POST"])
+@main.route("/place-order", methods=["POST"])
 def place_order():
     cart_items, cart_total = get_cart_items()
 
@@ -259,16 +219,11 @@ def place_order():
         db.session.add(order_item)
 
     db.session.commit()
-
     session.pop("cart", None)
 
     flash("Your order has been placed successfully.", "success")
     return redirect(url_for("main.checkout_success", order_id=order.id))
 
-
-# ====================
-## CHECKOUT SUCCESS ROUTE
-# ====================
 
 @main.route("/checkout-success/<int:order_id>")
 def checkout_success(order_id):
@@ -280,18 +235,63 @@ def checkout_success(order_id):
     )
 
 
-# ====================
-## ABOUT ROUTE
-# ====================
-
 @main.route("/about")
 def about():
     return render_template("about.html")
 
-# ====================
-## CONTACT ROUTE
-# ====================
-
-@main.route("/contact")
+@main.route("/contact", methods=["GET", "POST"])
 def contact():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        email = request.form.get("email", "").strip()
+        message = request.form.get("message", "").strip()
+
+        if not name or not email or not message:
+            flash("All fields are required.", "warning")
+            return redirect(url_for("main.contact"))
+
+        contact_message = ContactMessage(
+            name= name,
+            email= email,
+            message= message
+        )
+
+        db.session.add(contact_message)
+        db.session.commit()
+
+        flash("Thank you for contacting us. We will get back to you soon.", "success")
+        return redirect(url_for("main.contact"))
+
     return render_template("contact.html")
+
+@main.route("/privacy")
+def privacy():
+    return render_template("privacy_policy.html")
+
+
+@main.route("/terms")
+def terms():
+    return render_template("terms_of_service.html")
+
+
+@main.route("/track-order", methods=["GET", "POST"])
+def track_order():
+    order = None
+
+    if request.method == "POST":
+        order_id = request.form.get("order_id", "").strip()
+        customer_phone = request.form.get("customer_phone", "").strip()
+
+        if not order_id or not customer_phone:
+            flash("Please enter your order ID and phone number.", "warning")
+            return redirect(url_for("main.track_order"))
+
+        order = Order.query.filter_by(
+            id=order_id,
+            customer_phone=customer_phone
+        ).first()
+
+        if not order:
+            flash("No order found with these details.", "danger")
+
+    return render_template("track_order.html", order=order)

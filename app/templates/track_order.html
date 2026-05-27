@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Track Order | BurgerHub{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/track_order.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section class="track-hero">
+    <div class="track-content">
+        <p class="eyebrow">Order Tracking</p>
+        <h1>Track Your BurgerHub Order</h1>
+        <p>
+            Enter your order ID and phone number to check your latest order status.
+        </p>
+    </div>
+</section>
+
+<section class="track-section">
+    <div class="track-card">
+        <form method="POST" class="track-form">
+            <div class="form-group">
+                <label for="order_id">Order ID</label>
+                <input type="number" id="order_id" name="order_id" placeholder="Example: 1024" required>
+            </div>
+
+            <div class="form-group">
+                <label for="customer_phone">Phone Number</label>
+                <input type="text" id="customer_phone" name="customer_phone" placeholder="Example: 03001234567" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Track Order</button>
+        </form>
+    </div>
+
+    {% if order %}
+    <div class="order-result-card">
+        <div class="result-header">
+            <div>
+                <p class="eyebrow">Order Found</p>
+                <h2>Order #{{ order.id }}</h2>
+            </div>
+
+            <span class="status-badge {{ order.status|lower }}">
+                {{ order.status }}
+            </span>
+        </div>
+
+        <div class="order-info-grid">
+            <div>
+                <span>Customer</span>
+                <strong>{{ order.customer_name }}</strong>
+            </div>
+
+            <div>
+                <span>Phone</span>
+                <strong>{{ order.customer_phone }}</strong>
+            </div>
+
+            <div>
+                <span>Payment</span>
+                <strong>{{ order.payment_method|replace("_", " ")|title }}</strong>
+            </div>
+
+            <div>
+                <span>Total</span>
+                <strong>Rs. {{ "%.0f"|format(order.total_amount) }}</strong>
+            </div>
+        </div>
+
+        <div class="tracking-steps">
+            <div class="step {% if order.status in ['Pending', 'Preparing', 'Delivered'] %}active{% endif %}">
+                <span>1</span>
+                <div>
+                    <h3>Order Placed</h3>
+                    <p>Your order has been received.</p>
+                </div>
+            </div>
+
+            <div class="step {% if order.status in ['Preparing', 'Delivered'] %}active{% endif %}">
+                <span>2</span>
+                <div>
+                    <h3>Preparing</h3>
+                    <p>Your meal is being prepared.</p>
+                </div>
+            </div>
+
+            <div class="step {% if order.status == 'Delivered' %}active{% endif %}">
+                <span>3</span>
+                <div>
+                    <h3>Delivered</h3>
+                    <p>Your order has been delivered.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}BurgerHub Admin{% endblock %}</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin/admin_base.css') }}"
+    />
+    {% block style %}{% endblock %}
+  </head>
+  <body>
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="admin-logo">
+          <span>🍔</span>
+          <h2>BurgerHub</h2>
+        </div>
+
+        <nav class="admin-nav">
+          <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
+          <a href="{{ url_for('admin.products') }}">Products</a>
+          <a href="{{ url_for('admin.orders') }}">Orders</a>
+          <a href="{{ url_for('admin.customers') }}">Customers</a>
+          <a href="{{ url_for('admin.settings') }}">Settings</a>
+        </nav>
+      </aside>
+
+      <main class="admin-content">
+        <header class="admin-topbar">
+          <h1>{% block page_title %}{% endblock %}</h1>
+          <div class="admin-user">Admin</div>
+        </header>
+
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin/admin_base.js') }}"></script>
+    {% block script %}{% endblock %}
+  </body>
+</html>

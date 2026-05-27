@@ -1,201 +1,559 @@
-{% extends "base.html" %}
-
-{% block title %}Home | BurgerHub{% endblock %}
-
-{% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Home | BurgerHub{% endblock %} {%
+block style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/home.css') }}"
+/>
+{% endblock %} {% block content %}
 
 <section class="hero">
-    <div class="hero-content">
-        <span class="hero-badge">🔥 Hot & Fresh Every Day</span>
+  <div class="hero-content">
+    <span class="hero-badge">🔥 Hot & Fresh Every Day</span>
 
-        <h1>
-            Crave-Worthy Burgers,
-            <span>Delivered Fast.</span>
-        </h1>
+    <h1>
+      Crave-Worthy Burgers,
+      <span>Delivered Fast.</span>
+    </h1>
 
-        <p>
-            Enjoy premium burgers, crispy fries, chilled shakes, and signature meals
-            crafted for bold flavor lovers.
-        </p>
+    <p>
+      Enjoy premium burgers, crispy fries, chilled shakes, and signature meals
+      crafted for bold flavor lovers.
+    </p>
 
-        <div class="hero-actions">
-            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">Order Now</a>
-            <a href="{{ url_for('main.menu') }}" class="btn btn-secondary">View Menu</a>
-        </div>
-
-        <div class="hero-stats">
-            <div>
-                <strong>25+</strong>
-                <span>Menu Items</span>
-            </div>
-
-            <div>
-                <strong>15 min</strong>
-                <span>Avg Delivery</span>
-            </div>
-
-            <div>
-                <strong>4.9</strong>
-                <span>Customer Rating</span>
-            </div>
-        </div>
+    <div class="hero-actions">
+      <a href="{{ url_for('main.menu') }}" class="btn btn-primary">Order Now</a>
+      <a href="{{ url_for('main.menu') }}" class="btn btn-secondary"
+        >View Menu</a
+      >
     </div>
 
-    <div class="hero-visual">
-        <div class="discount-badge">
-            <span>Save</span>
-            <strong>30%</strong>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-icon">🍔</div>
+        <div>
+          <strong>{{ count if count else 0 }}+</strong>
+          <span>Menu Items</span>
         </div>
+      </div>
 
-        <div class="burger-card">
-            <div class="burger-emoji">🍔</div>
-            <h3>Classic Beef Burger</h3>
-            <p>Juicy beef patty, melted cheese, fresh lettuce, and signature sauce.</p>
+      <div class="hero-stat">
+        <div class="stat-icon">⚡</div>
+        <div>
+          <strong>15 min</strong>
+          <span>Avg Delivery</span>
+        </div>
+      </div>
 
-            <div class="burger-card-footer">
+      <div class="hero-stat">
+        <div class="stat-icon">⭐</div>
+        <div>
+          <strong>4.9</strong>
+          <span>Customer Rating</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="discount-badge">
+      <span>Save</span>
+      <strong>30%</strong>
+    </div>
+
+    <div class="burger-card">
+      <div class="burger-emoji">🍔</div>
+      <h3>Classic Beef Burger</h3>
+      <p>
+        Juicy beef patty, melted cheese, fresh lettuce, and signature sauce.
+      </p>
+
+      <!-- <div class="burger-card-footer">
                 <strong>Rs. 799</strong>
                 <a href="{{ url_for('main.product_detail', product_id=1) }}">View Item</a>
-            </div>
-        </div>
-
-        <div class="floating-card floating-card-left">
-            <span>🍟</span>
-            <div>
-                <strong>Crispy Fries</strong>
-                <small>Freshly seasoned</small>
-            </div>
-        </div>
-
-        <div class="floating-card floating-card-right">
-            <span>🥤</span>
-            <div>
-                <strong>Cold Drinks</strong>
-                <small>Perfect combo</small>
-            </div>
-        </div>
+            </div> -->
     </div>
+
+    <div class="floating-card floating-card-left">
+      <span>🍟</span>
+      <div>
+        <strong>Crispy Fries</strong>
+        <small>Freshly seasoned</small>
+      </div>
+    </div>
+
+    <div class="floating-card floating-card-right">
+      <span>🥤</span>
+      <div>
+        <strong>Cold Drinks</strong>
+        <small>Perfect combo</small>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="category-section">
-    <div class="section-header">
-        <p class="eyebrow">Explore Categories</p>
-        <h2>Made for Every Craving</h2>
-    </div>
+  <div class="section-header">
+    <p class="eyebrow">Explore Categories</p>
+    <h2>Made for Every Craving</h2>
+  </div>
 
-    <div class="category-grid">
-        <article class="category-card">
-            <div class="category-icon">🍔</div>
-            <h3>Burgers</h3>
-            <p>Loaded, juicy, cheesy, and grilled to perfection.</p>
-        </article>
+  <div class="category-grid">
+    <article class="category-card">
+      <div class="category-icon">🍔</div>
+      <h3>Burgers</h3>
+      <p>Loaded, juicy, cheesy, and grilled to perfection.</p>
+    </article>
 
-        <article class="category-card">
-            <div class="category-icon">🍟</div>
-            <h3>Sides</h3>
-            <p>Crispy fries, loaded bites, and snackable favorites.</p>
-        </article>
+    <article class="category-card">
+      <div class="category-icon">🍟</div>
+      <h3>Sides</h3>
+      <p>Crispy fries, loaded bites, and snackable favorites.</p>
+    </article>
 
-        <article class="category-card">
-            <div class="category-icon">🥤</div>
-            <h3>Drinks</h3>
-            <p>Refreshing chilled drinks and creamy shakes.</p>
-        </article>
+    <article class="category-card">
+      <div class="category-icon">🥤</div>
+      <h3>Drinks</h3>
+      <p>Refreshing chilled drinks and creamy shakes.</p>
+    </article>
 
-        <article class="category-card">
-            <div class="category-icon">🔥</div>
-            <h3>Deals</h3>
-            <p>Value combos made for friends, family, and foodies.</p>
-        </article>
-    </div>
+    <article class="category-card">
+      <div class="category-icon">🔥</div>
+      <h3>Deals</h3>
+      <p>Value combos made for friends, family, and foodies.</p>
+    </article>
+  </div>
 </section>
 
 <section class="featured-section">
-    <div class="section-header section-header-between">
-        <div>
-            <p class="eyebrow">Popular Picks</p>
-            <h2>Customer Favorites</h2>
-        </div>
-
-        <a href="{{ url_for('main.menu') }}" class="view-all-link">View Full Menu</a>
+  <div class="section-header section-header-between">
+    <div>
+      <p class="eyebrow">Popular Picks</p>
+      <h2>Customer Favorites</h2>
+      <p class="section-subtitle">Handpicked featured items from our menu.</p>
     </div>
 
-    <div class="product-grid">
-    {% if featured_products %}
-        {% for product in featured_products %}
-            <article class="product-card">
-                <div class="product-image-placeholder" >
-                      <img src="{{product.image}}" alt="{{product.name}}">
-                </div>
+    <a href="{{ url_for('main.menu') }}" class="view-all-link">
+      View Full Menu →
+    </a>
+  </div>
 
-                <div class="product-card-body">
-                    <span class="product-category">{{ product.category }}</span>
-                    <h3>{{ product.name }}</h3>
-                    <p>{{ product.description }}</p>
+  <div class="product-grid">
+    {% if featured_products %} {% for product in featured_products %}
+    <article class="product-card">
+      <a
+        href="{{ url_for('main.product_detail', product_id=product.id) }}"
+        class="product-image-box"
+      >
+        {% if product.image %}
+        <img src="{{product.image}}" alt="{{ product.name }}" />
+        {% else %}
+        <div class="product-placeholder-icon">🍔</div>
+        {% endif %} {% if product.is_featured %}
+        <span class="featured-badge">Featured</span>
+        {% endif %}
+      </a>
 
-                    <div class="product-card-footer">
-                        <strong>Rs. {{ product.price }}</strong>
-                        <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-dark btn-small">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </article>
-        {% endfor %}
-    {% else %}
-        <div class="home-empty-featured">
-            <h3>No featured products yet</h3>
-            <p>Add products and mark them as featured to show them here.</p>
-            <a href="{{ url_for('main.add_product') }}" class="btn btn-primary">
-                Add Product
-            </a>
+      <div class="product-card-body">
+        <div class="product-meta">
+          <span class="product-category">{{ product.category }}</span>
+          {% if product.is_available %}
+          <span class="availability available">Available</span>
+          {% else %}
+          <span class="availability unavailable">Unavailable</span>
+          {% endif %}
         </div>
+
+        <h3>{{ product.name }}</h3>
+
+        <p>
+          {{ product.description[:95] }} {% if product.description|length > 95
+          %}...{% endif %}
+        </p>
+
+        <div class="product-card-footer">
+          <strong>Rs. {{ "%.0f"|format(product.price) }}</strong>
+
+          <a
+            href="{{ url_for('main.product_detail', product_id=product.id) }}"
+            class="btn btn-dark btn-small"
+          >
+            View Item
+          </a>
+        </div>
+      </div>
+    </article>
+    {% endfor %} {% else %}
+    <div class="home-empty-featured">
+      <div class="empty-icon">🍔</div>
+      <h3>No featured products yet</h3>
+      <p>
+        Once products are added and marked as featured from the admin panel,
+        they will appear here automatically.
+      </p>
+      <a href="{{ url_for('main.menu') }}" class="btn btn-primary">
+        Browse Menu
+      </a>
+    </div>
     {% endif %}
-</div>
+  </div>
 </section>
 
 <section class="promo-section">
-    <div class="promo-card">
-        <div class="promo-content">
-            <p class="eyebrow">Limited Time Offer</p>
-            <h2>Get Your Favorite Meal Combo Today</h2>
+  <div class="promo-card">
+    <div class="promo-content">
+      <p class="eyebrow">Limited Time Offer</p>
+      <h2>Get Your Favorite Meal Combo Today</h2>
+      <p>
+        Grab a burger, fries, and drink combo with bold flavor and fast
+        delivery. Perfect for lunch breaks, late-night cravings, and weekend
+        treats.
+      </p>
+
+      <a href="{{ url_for('main.menu') }}" class="btn btn-primary"
+        >Explore Deals</a
+      >
+    </div>
+
+    <div class="promo-visual">
+      <span>🍔</span>
+      <span>🍟</span>
+      <span>🥤</span>
+    </div>
+  </div>
+</section>
+
+<section class="reviews-section">
+  <div class="reviews-header">
+    <p class="eyebrow">Customer Reviews</p>
+    <h2>Real Feedback From Happy Customers</h2>
+    <p>
+      Customers love BurgerHub for fresh burgers, fast service, and reliable
+      quality.
+    </p>
+  </div>
+
+  <div class="reviews-grid">
+    <article class="review-card review-dark">
+      <div class="review-rating">★★★★★</div>
+      <p>
+        “The beef burger was juicy, fresh, and packed perfectly. Delivery was
+        fast and the fries were still crispy.”
+      </p>
+
+      <div class="review-user">
+        <div class="review-avatar">A</div>
+        <div>
+          <strong>Ali Raza</strong>
+          <span>Regular Customer</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="review-card">
+      <div class="review-rating">★★★★★</div>
+      <p>
+        “Great taste and smooth ordering experience. The combo meals are worth
+        it.”
+      </p>
+
+      <div class="review-user">
+        <div class="review-avatar">S</div>
+        <div>
+          <strong>Sara Ahmed</strong>
+          <span>Verified Order</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="review-card">
+      <div class="review-rating">★★★★☆</div>
+      <p>
+        “Loaded fries and chicken burger were both fresh, flavorful, and
+        filling.”
+      </p>
+
+      <div class="review-user">
+        <div class="review-avatar">H</div>
+        <div>
+          <strong>Hamza Khan</strong>
+          <span>Food Lover</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- <section class="discount-section">
+  <div class="discount-card">
+    <div class="discount-content">
+      <span class="discount-label">Limited Offer</span>
+
+      <h2>Get 20% Off Your Next Order</h2>
+
+      <p>
+        Subscribe to BurgerHub updates and receive exclusive discounts, new menu
+        alerts, and limited-time food deals.
+      </p>
+
+      <form class="discount-form" id="discountForm">
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email address"
+          required
+        />
+        <button type="submit">Claim Discount</button>
+      </form>
+
+      <div id="discountBox" class="discount-success"></div>
+    </div>
+
+    <div class="discount-visual">
+      <div class="discount-circle">
+        <strong>20%</strong>
+        <span>OFF</span>
+        <small>Next Order</small>
+      </div>
+
+      <div class="floating-food food-one">🍔</div>
+      <div class="floating-food food-two">🍟</div>
+      <div class="floating-food food-three">🥤</div>
+    </div>
+  </div>
+</section> -->
+<section class="discount-section">
+    <div class="discount-card" id="discountCard">
+        <div class="discount-content">
+            <span class="discount-label">Limited Offer</span>
+
+            <h2>Get <span>20%</span> Off Your Next Order</h2>
+
             <p>
-                Grab a burger, fries, and drink combo with bold flavor and fast delivery.
-                Perfect for lunch breaks, late-night cravings, and weekend treats.
+                Subscribe to BurgerHub updates and receive exclusive discounts,
+                new menu alerts, and limited-time food deals.
             </p>
 
-            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">Explore Deals</a>
+            <form class="discount-form" id="discountForm">
+                <input 
+                    type="email" 
+                    name="email" 
+                    placeholder="Enter your email address" 
+                    required
+                >
+
+                <button type="submit">
+                    Claim Discount
+                </button>
+            </form>
         </div>
 
-        <div class="promo-visual">
-            <span>🍔</span>
-            <span>🍟</span>
-            <span>🥤</span>
+        <div class="discount-visual">
+            <div class="discount-circle">
+                <strong>20%</strong>
+                <span>OFF</span>
+                <small>Next Order</small>
+            </div>
+
+            <div class="floating-food food-one">🍔</div>
+            <div class="floating-food food-two">🍟</div>
+            <div class="floating-food food-three">🥤</div>
         </div>
     </div>
 </section>
 
-<section class="trust-section">
-    <div class="trust-card">
-        <span>✅</span>
-        <h3>Fresh Ingredients</h3>
-        <p>Prepared daily with quality ingredients and bold flavors.</p>
+<!-- <script>
+ 
+const discountForm = document.getElementById("discountForm");
+const discountBox = document.getElementById("discountBox");
+
+discountForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(discountForm);
+
+    const response = await fetch("/claim-discount", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+       discountBox.innerHTML = `
+    <div class="claimed-coupon">
+        <div class="claimed-left">
+            <span class="coupon-badge">20% OFF</span>
+
+            <div class="claimed-info">
+                <div class="party-icon">🎉</div>
+                <div>
+                    <h3>Discount Claimed!</h3>
+                    <p>Your exclusive code is ready for your next BurgerHub order.</p>
+                </div>
+            </div>
+
+            <div class="claim-features">
+                <span>🏷️ Exclusive Offer</span>
+                <span>🛡️ One-time Use</span>
+                <span>⏱️ Limited Time</span>
+            </div>
+        </div>
+
+        <div class="claimed-divider"></div>
+
+        <div class="claimed-right">
+            <span class="use-code-label">Use Code</span>
+
+            <div class="code-ticket">
+                <strong id="couponCode">${data.code}</strong>
+
+                <button type="button" class="copy-ticket-btn" onclick="copyDiscountCode()">
+                    <span>📋</span>
+                    Copy
+                </button>
+            </div>
+
+            <p>Unique code · One-time use only</p>
+        </div>
     </div>
 
-    <div class="trust-card">
-        <span>⚡</span>
-        <h3>Fast Service</h3>
-        <p>Designed for quick ordering and smooth delivery experiences.</p>
+    <div class="claim-toast">
+        ✅ Your discount code is active and ready to use!
     </div>
+`;
 
-    <div class="trust-card">
-        <span>⭐</span>
-        <h3>Premium Taste</h3>
-        <p>Every meal is built to be satisfying, consistent, and memorable.</p>
-    </div>
-</section>
+        discountBox.classList.add("show");
+
+        discountForm.reset();
+
+        setTimeout(() => {
+            discountBox.classList.remove("show");
+            discountBox.innerHTML = "";
+        }, 15000);
+    } else {
+        discountBox.innerHTML = `<p>${data.message}</p>`;
+        discountBox.classList.add("show");
+    }
+});
+function copyDiscountCode() {
+    const code = document.getElementById("couponCode").innerText;
+    const button = document.querySelector(".copy-ticket-btn");
+
+    navigator.clipboard.writeText(code).then(() => {
+        button.innerHTML = "✅ Copied";
+
+        setTimeout(() => {
+            button.innerHTML = "<span>📋</span> Copy";
+        }, 2000);
+    });
+}
+</script> -->
+<script>
+const discountCard = document.getElementById("discountCard");
+const originalOfferHTML = discountCard.innerHTML;
+
+document.addEventListener("submit", async function (e) {
+    if (!e.target.matches("#discountForm")) return;
+
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+
+    const response = await fetch("/claim-discount", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+        flipToClaimedCard(data.code);
+    }
+});
+
+function flipToClaimedCard(code) {
+    discountCard.classList.add("card-shuffle-out");
+
+    setTimeout(() => {
+        discountCard.className = "discount-card claimed-coupon";
+
+        discountCard.innerHTML = `
+            <div class="claimed-left">
+                <span class="coupon-badge">20% OFF</span>
+
+                <div class="claimed-info">
+                    <div class="party-icon">🎉</div>
+                    <div>
+                        <h3>Discount Claimed!</h3>
+                        <p>Your exclusive code is ready for your next BurgerHub order.</p>
+                    </div>
+                </div>
+
+                <div class="claim-features">
+                    <span>🏷️ Exclusive Offer</span>
+                    <span>🛡️ One-time Use</span>
+                    <span>⏱️ Limited Time</span>
+                </div>
+            </div>
+
+            <div class="claimed-divider"></div>
+
+            <div class="claimed-right">
+                <span class="use-code-label">Use Code</span>
+
+                <div class="code-ticket">
+                    <strong id="couponCode">${code}</strong>
+
+                    <button type="button" class="copy-ticket-btn" onclick="copyDiscountCode()">
+                        📋 Copy
+                    </button>
+                </div>
+
+                <p>Unique code · One-time use only</p>
+            </div>
+        `;
+
+        discountCard.classList.add("card-shuffle-in");
+
+        setTimeout(() => {
+            discountCard.classList.remove("card-shuffle-in");
+        }, 600);
+
+        setTimeout(() => {
+            flipToOfferCard();
+        }, 15000);
+
+    }, 450);
+}
+
+function flipToOfferCard() {
+    discountCard.classList.add("card-shuffle-out");
+
+    setTimeout(() => {
+        discountCard.className = "discount-card";
+        discountCard.innerHTML = originalOfferHTML;
+
+        discountCard.classList.add("card-shuffle-in");
+
+        setTimeout(() => {
+            discountCard.classList.remove("card-shuffle-in");
+        }, 600);
+
+    }, 450);
+}
+
+function copyDiscountCode() {
+    const code = document.getElementById("couponCode").innerText;
+    const button = document.querySelector(".copy-ticket-btn");
+
+    navigator.clipboard.writeText(code);
+
+    button.innerText = "✅ Copied";
+
+    setTimeout(() => {
+        button.innerText = "📋 Copy";
+    }, 2000);
+}
+</script>
 
 {% endblock %}

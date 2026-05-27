@@ -1,0 +1,44 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Admin Dashboard | BurgerHub{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/dashboard.css') }}">
+{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<section class="stats-grid">
+    <div class="stat-card">
+        <span>Total Revenue</span>
+        <h2>$0</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Total Orders</span>
+        <h2>0</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Total Products</span>
+        <h2>{{ count if count else 0 }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <span>Total Customers</span>
+        <h2>0</h2>
+    </div>
+</section>
+
+<section class="admin-panel">
+    <h2>Welcome back</h2>
+    <p>Manage your BurgerHub business from one clean and powerful admin dashboard.</p>
+</section>
+
+{% endblock %}
+
+{% block script %}
+<!-- <script src="{{ url_for('static', filename='js/admin/dashboard.js') }}"></script> -->
+{% endblock %}
