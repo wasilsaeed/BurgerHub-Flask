@@ -6,7 +6,11 @@ block style %}
 />
 {% endblock %} {% block content %}
 
-<section class="cart-hero">
+
+
+<section class="cart-wrapper">
+  {% if cart_items %}
+  <section class="cart-hero">
   <div>
     <p class="eyebrow">Your Cart</p>
     <h1>Review Your Order</h1>
@@ -28,10 +32,6 @@ block style %}
   </div>
   {% endif %}
 </section>
-
-<section class="cart-wrapper">
-  {% if cart_items %}
-
   <div class="cart-layout">
     <div class="cart-items-panel">
       <div class="cart-section-heading">
@@ -43,6 +43,7 @@ block style %}
       </div>
 
       <div class="cart-items">
+        
         {% for item in cart_items %}
         <article class="cart-item-card">
           <div class="cart-item-image">
