@@ -103,20 +103,26 @@
                 <div class="summary-divider"></div>
 
                 <div class="summary-row">
-                    <span>Subtotal</span>
-                    <strong>Rs. {{ cart_total }}</strong>
-                </div>
+    <span>Subtotal</span>
+    <strong>Rs. {{ cart_total }}</strong>
+</div>
 
-                <div class="summary-row">
-                    <span>Delivery</span>
-                    <strong>Rs. 0</strong>
-                </div>
+<div class="summary-row">
+    <span>Delivery</span>
+    <strong>Rs. 0</strong>
+</div>
 
-                <div class="summary-row total-row">
-                    <span>Total</span>
-                    <strong>Rs. {{ cart_total }}</strong>
-                </div>
+{% if discount_amount > 0 %}
+<div class="summary-row discount-row">
+    <span>Discount{% if discount_code %} ({{ discount_code }}){% endif %}</span>
+    <strong>- Rs. {{ discount_amount }}</strong>
+</div>
+{% endif %}
 
+<div class="summary-row total-row">
+    <span>Total</span>
+    <strong>Rs. {{ final_total }}</strong>
+</div>
                 <div class="checkout-note">
                     Payment will be collected when your order is delivered.
                 </div>

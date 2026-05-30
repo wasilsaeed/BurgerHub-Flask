@@ -3,7 +3,10 @@
 {% block title %}Products | BurgerHub Admin{% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin/products.css') }}">
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin/products.css') }}"
+/>
 {% endblock %}
 
 {% block page_title %}Products{% endblock %}
@@ -11,158 +14,297 @@
 {% block content %}
 
 <div class="products-header">
-    <div>
-        <h2>Manage Products</h2>
-        <p>Add, edit, and manage your BurgerHub menu items.</p>
-    </div>
+  <div>
+    <h2>Manage Products</h2>
+    <p>Add, edit, and manage your BurgerHub menu items.</p>
+  </div>
 
-    <button type="button" class="btn btn-primary add-product-btn" id="openAddProductModal">
+  <button
+    type="button"
+    class="btn btn-primary add-product-btn"
+    id="openAddProductModal"
+  >
     + Add Product
-</button>
+  </button>
 </div>
 
 <div class="products-card">
-    <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th class="actions-col">Actions</th>
-            </tr>
-        </thead>
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th class="actions-col">Actions</th>
+      </tr>
+    </thead>
 
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-                <td>${{ product.price }}</td>
-                <td><span class="status active">Active</span></td>
-                <td class="actions">
-                    <a href="#">Edit</a>
-                    <a href="#" class="delete">Delete</a>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="5" class="empty-row">No products found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.category }}</td>
+        <td>Rs.{{ product.price }}</td>
+
+        <td>
+          {% if product.is_available %}
+          <span class="status active">Active</span>
+          {% else %}
+          <span class="status inactive">Inactive</span>
+          {% endif %}
+        </td>
+
+        <td class="actions">
+  <button
+    type="button"
+    class="icon-btn edit-product-btn"
+    title="Edit product"
+    aria-label="Edit product"
+    data-id="{{ product.id }}"
+    data-name="{{ product.name }}"
+    data-category="{{ product.category }}"
+    data-price="{{ product.price }}"
+    data-image="{{ product.image or '' }}"
+    data-description="{{ product.description }}"
+    data-featured="{{ 'true' if product.is_featured else 'false' }}"
+    data-available="{{ 'true' if product.is_available else 'false' }}"
+    data-edit-url="{{ url_for('admin.edit_product', product_id=product.id) }}"
+  >
+    <i class="fa-solid fa-pen-to-square"></i>
+  </button>
+
+  <form
+  method="POST"
+  action="{{ url_for('admin.delete_product', product_id=product.id) }}"
+  onsubmit="return confirm('Are you sure you want to delete this product?');"
+>
+  <button
+    type="submit"
+    class="icon-btn delete-product-btn"
+    title="Delete product"
+    aria-label="Delete product"
+  >
+    <i class="fa-solid fa-trash"></i>
+  </button>
+</form>
+</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5" class="empty-row">No products found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
+<div class="modal-overlay" id="productModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <p class="eyebrow">Admin</p>
+        <h2 id="productModalTitle">Add New Product</h2>
+        <span id="productModalSubtitle">
+          Create a new menu item and publish it to the frontend menu.
+        </span>
+      </div>
 
-<div class="modal-overlay" id="addProductModal">
-    <div class="modal-card">
+      <button type="button" class="modal-close" id="closeProductModal">
+        &times;
+      </button>
+    </div>
 
-        <div class="modal-header">
-            <div>
-                <p class="eyebrow">Admin</p>
-                <h2>Add New Product</h2>
-                <span>Create a new menu item and publish it to the frontend menu.</span>
-            </div>
-
-            <button type="button" class="modal-close" id="closeAddProductModal">
-                &times;
-            </button>
+    <form
+      id="productForm"
+      class="modal-form"
+      method="POST"
+      action="{{ url_for('admin.add_product') }}"
+    >
+      <div class="form-grid two-columns">
+        <div class="form-group">
+          <label for="modal-name">Product Name *</label>
+          <input
+            type="text"
+            id="modal-name"
+            name="name"
+            placeholder="Classic Beef Burger"
+            required
+          />
         </div>
 
-        <form class="modal-form" method="POST" action="{{ url_for('admin.add_product') }}">
+        <div class="form-group">
+          <label for="modal-category">Category *</label>
+          <select id="modal-category" name="category" required>
+            <option value="">Select category</option>
+            <option value="Burgers">Burgers</option>
+            <option value="Sides">Sides</option>
+            <option value="Drinks">Drinks</option>
+            <option value="Deals">Deals</option>
+            <option value="Desserts">Desserts</option>
+          </select>
+        </div>
+      </div>
 
-            <div class="form-grid two-columns">
-                <div class="form-group">
-                    <label for="modal-name">Product Name *</label>
-                    <input type="text" id="modal-name" name="name" placeholder="Classic Beef Burger" required>
-                </div>
+      <div class="form-grid two-columns">
+        <div class="form-group">
+          <label for="modal-price">Price *</label>
+          <input
+            type="number"
+            id="modal-price"
+            name="price"
+            placeholder="799"
+            min="1"
+            required
+          />
+        </div>
 
-                <div class="form-group">
-                    <label for="modal-category">Category *</label>
-                    <select id="modal-category" name="category" required>
-                        <option value="">Select category</option>
-                        <option value="Burgers">Burgers</option>
-                        <option value="Sides">Sides</option>
-                        <option value="Drinks">Drinks</option>
-                        <option value="Deals">Deals</option>
-                        <option value="Desserts">Desserts</option>
-                    </select>
-                </div>
-            </div>
+        <div class="form-group">
+          <label for="modal-image">Image Filename</label>
+          <input
+            type="text"
+            id="modal-image"
+            name="image"
+            placeholder="burger.jpg"
+          />
+        </div>
+      </div>
 
-            <div class="form-grid two-columns">
-                <div class="form-group">
-                    <label for="modal-price">Price *</label>
-                    <input type="number" id="modal-price" name="price" placeholder="799" min="1" required>
-                </div>
+      <div class="form-group">
+        <label for="modal-description">Description *</label>
+        <textarea
+          id="modal-description"
+          name="description"
+          rows="5"
+          placeholder="Write a short product description..."
+          required
+        ></textarea>
+      </div>
 
-                <div class="form-group">
-                    <label for="modal-image">Image Filename</label>
-                    <input type="text" id="modal-image" name="image" placeholder="burger.jpg">
-                </div>
-            </div>
+      <div class="form-options">
+        <label class="checkbox-field">
+          <input type="checkbox" id="modal-is-featured" name="is_featured" />
+          <span>
+            <strong>Featured Product</strong>
+            <small>Show this product on homepage highlights.</small>
+          </span>
+        </label>
 
-            <div class="form-group">
-                <label for="modal-description">Description *</label>
-                <textarea id="modal-description" name="description" rows="5" placeholder="Write a short product description..." required></textarea>
-            </div>
+        <label class="checkbox-field">
+          <input
+            type="checkbox"
+            id="modal-is-available"
+            name="is_available"
+            checked
+          />
+          <span>
+            <strong>Available on Menu</strong>
+            <small>Customers can order this product.</small>
+          </span>
+        </label>
+      </div>
 
-            <div class="form-options">
-                <label class="checkbox-field">
-                    <input type="checkbox" name="is_featured">
-                    <span>
-                        <strong>Featured Product</strong>
-                        <small>Show this product on homepage highlights.</small>
-                    </span>
-                </label>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelProductModal">
+          Cancel
+        </button>
 
-                <label class="checkbox-field">
-                    <input type="checkbox" name="is_available" checked>
-                    <span>
-                        <strong>Available on Menu</strong>
-                        <small>Customers can order this product.</small>
-                    </span>
-                </label>
-            </div>
-
-            <div class="modal-actions">
-                <button type="button" class="btn btn-secondary" id="cancelAddProductModal">
-                    Cancel
-                </button>
-
-                <button type="submit" class="btn btn-primary">
-                    Save Product
-                </button>
-            </div>
-
-        </form>
-    </div>
+        <button type="submit" class="btn btn-primary" id="productSubmitBtn">
+          Save Product
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script>
-    const addProductModal = document.getElementById("addProductModal");
-    const openAddProductModal = document.getElementById("openAddProductModal");
-    const closeAddProductModal = document.getElementById("closeAddProductModal");
-    const cancelAddProductModal = document.getElementById("cancelAddProductModal");
+  const productModal = document.getElementById("productModal");
+  const openAddProductModal = document.getElementById("openAddProductModal");
+  const closeProductModal = document.getElementById("closeProductModal");
+  const cancelProductModal = document.getElementById("cancelProductModal");
 
-    openAddProductModal.addEventListener("click", () => {
-        addProductModal.classList.add("show");
-        document.body.classList.add("modal-open");
+  const productForm = document.getElementById("productForm");
+  const productModalTitle = document.getElementById("productModalTitle");
+  const productModalSubtitle = document.getElementById("productModalSubtitle");
+  const productSubmitBtn = document.getElementById("productSubmitBtn");
+
+  const nameInput = document.getElementById("modal-name");
+  const categoryInput = document.getElementById("modal-category");
+  const priceInput = document.getElementById("modal-price");
+  const imageInput = document.getElementById("modal-image");
+  const descriptionInput = document.getElementById("modal-description");
+  const featuredInput = document.getElementById("modal-is-featured");
+  const availableInput = document.getElementById("modal-is-available");
+
+  const addProductUrl = "{{ url_for('admin.add_product') }}";
+
+  function openModal() {
+    productModal.classList.add("show");
+    document.body.classList.add("modal-open");
+  }
+
+  function closeModal() {
+    productModal.classList.remove("show");
+    document.body.classList.remove("modal-open");
+  }
+
+  function resetFormForAdd() {
+    productForm.reset();
+
+    productForm.action = addProductUrl;
+    productModalTitle.textContent = "Add New Product";
+    productModalSubtitle.textContent =
+      "Create a new menu item and publish it to the frontend menu.";
+    productSubmitBtn.textContent = "Save Product";
+
+    availableInput.checked = true;
+    featuredInput.checked = false;
+  }
+
+  function fillFormForEdit(button) {
+    productForm.action = button.dataset.editUrl;
+
+    productModalTitle.textContent = "Edit Product";
+    productModalSubtitle.textContent =
+      "Update this menu item and save your changes.";
+    productSubmitBtn.textContent = "Update Product";
+
+    nameInput.value = button.dataset.name || "";
+    categoryInput.value = button.dataset.category || "";
+    priceInput.value = button.dataset.price || "";
+    imageInput.value = button.dataset.image || "";
+    descriptionInput.value = button.dataset.description || "";
+
+    featuredInput.checked = button.dataset.featured === "true";
+    availableInput.checked = button.dataset.available === "true";
+  }
+
+  openAddProductModal.addEventListener("click", () => {
+    resetFormForAdd();
+    openModal();
+  });
+
+  document.querySelectorAll(".edit-product-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      fillFormForEdit(button);
+      openModal();
     });
+  });
 
-    function closeModal() {
-        addProductModal.classList.remove("show");
-        document.body.classList.remove("modal-open");
+  closeProductModal.addEventListener("click", closeModal);
+  cancelProductModal.addEventListener("click", closeModal);
+
+  productModal.addEventListener("click", (event) => {
+    if (event.target === productModal) {
+      closeModal();
     }
+  });
 
-    closeAddProductModal.addEventListener("click", closeModal);
-    cancelAddProductModal.addEventListener("click", closeModal);
-
-    addProductModal.addEventListener("click", (event) => {
-        if (event.target === addProductModal) {
-            closeModal();
-        }
-    });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  });
 </script>
+
 {% endblock %}

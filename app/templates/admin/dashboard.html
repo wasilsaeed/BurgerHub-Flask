@@ -13,22 +13,22 @@
 <section class="stats-grid">
     <div class="stat-card">
         <span>Total Revenue</span>
-        <h2>$0</h2>
+        <h2>Rs. {{ total_revenue|int }}</h2>
     </div>
 
     <div class="stat-card">
         <span>Total Orders</span>
-        <h2>0</h2>
+        <h2>{{ total_orders }}</h2>
     </div>
 
     <div class="stat-card">
         <span>Total Products</span>
-        <h2>{{ count if count else 0 }}</h2>
+        <h2>{{ total_products }}</h2>
     </div>
 
     <div class="stat-card">
         <span>Total Customers</span>
-        <h2>0</h2>
+        <h2>{{ total_customers }}</h2>
     </div>
 </section>
 
@@ -37,8 +37,36 @@
     <p>Manage your BurgerHub business from one clean and powerful admin dashboard.</p>
 </section>
 
-{% endblock %}
+<section class="admin-panel">
+    <h2>Recent Orders</h2>
 
-{% block script %}
-<!-- <script src="{{ url_for('static', filename='js/admin/dashboard.js') }}"></script> -->
+    {% if recent_orders %}
+    <table class="dashboard-table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Total</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for order in recent_orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>{{ order.customer_name }}</td>
+                <td>{{ order.customer_phone }}</td>
+                <td>Rs.{{ order.total_amount|int }}</td>
+                <td>{{ order.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No orders found yet.</p>
+    {% endif %}
+</section>
+
 {% endblock %}

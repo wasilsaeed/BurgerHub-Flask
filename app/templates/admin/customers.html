@@ -23,7 +23,7 @@
 
     <div class="overview-card">
         <span>Loyalty Members</span>
-        <h3>24</h3>
+        <h3>{{ customers|length if customers else 0 }}</h3>
     </div>
 </div>
 
@@ -42,7 +42,7 @@
             <thead>
                 <tr>
                     <th>Customer</th>
-                    <th>Email</th>
+                    <th>Phone</th>
                     <th>Orders</th>
                     <th>Total Spent</th>
                     <th>Status</th>
@@ -61,9 +61,9 @@
                             </div>
                         </div>
                     </td>
-                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.phone }}</td>
                     <td>{{ customer.orders if customer.orders else 0 }}</td>
-                    <td>${{ "%.2f"|format(customer.spent if customer.spent else 0) }}</td>
+                    <td>Rs.{{ "%.2f"|format(customer.spent if customer.spent else 0) }}</td>
                     <td><span class="status-badge active">Active</span></td>
                 </tr>
                 {% else %}

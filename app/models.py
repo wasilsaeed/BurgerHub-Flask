@@ -64,3 +64,23 @@ class DiscountCode(db.Model):
     code = db.Column(db.String(30), unique=True, nullable=False)
     used = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class SiteSetting(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    restaurant_name = db.Column(db.String(100), default="BurgerHub")
+    support_email = db.Column(db.String(120), default="support@burgerhub.com")
+    phone = db.Column(db.String(50), default="+1 555 123 4567")
+    hours = db.Column(db.String(100), default="10:00 AM - 11:00 PM")
+    address = db.Column(db.Text, default="123 Burger Street, Food City")
+
+    accept_orders = db.Column(db.Boolean, default=True)
+    enable_delivery = db.Column(db.Boolean, default=True)
+    enable_pickup = db.Column(db.Boolean, default=True)
+
+    admin_name = db.Column(db.String(100), default="Admin")
+    admin_email = db.Column(db.String(120), default="admin@burgerhub.com")
+
+    admin_username = db.Column(db.String(80), default="admin")
+    admin_password_hash = db.Column(db.String(255), nullable=True)

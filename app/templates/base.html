@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}BurgerHub{% endblock %}</title>
 
-    <link
-      rel="stylesheet"
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico')}}">   
+    
+    <link rel="stylesheet"
       href="{{ url_for('static', filename='css/base.css') }}"
     />
 
@@ -15,7 +16,7 @@
   <body>
     <header class="site-header">
       <nav class="navbar">
-        <a href="{{ url_for('main.home') }}" class="brand">BurgerHub</a>
+        <a href="{{ url_for('main.home') }}" class="brand">🍔 BurgerHub</a>
 
         <ul class="nav-links">
           <li><a href="{{ url_for('main.home') }}">Home</a></li>
@@ -51,7 +52,7 @@
     <footer class="site-footer">
       <div class="footer-container">
         <div class="footer-brand">
-          <a href="{{ url_for('main.home') }}" class="footer-logo">BurgerHub</a>
+          <a href="{{ url_for('main.home') }}" class="footer-logo">🍔 BurgerHub</a>
           <p>
             Premium fast food crafted for bold flavor lovers. Fresh burgers,
             crispy sides, chilled drinks, and quick service made for every

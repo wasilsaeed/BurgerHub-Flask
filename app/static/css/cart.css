@@ -436,6 +436,107 @@
     color: var(--white);
 }
 
+
+
+/* =========================
+    Apply Discount Code
+========================= */
+
+.discount-form {
+  margin-top: 20px;
+  padding: 18px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 14px;
+}
+
+.discount-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #431407;
+}
+
+.discount-form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.discount-form input {
+  flex: 1;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #fdba74;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #431407;
+  background: #ffffff;
+}
+
+.discount-form input:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+}
+
+.discount-form input::placeholder {
+  color: #9a3412;
+}
+
+.discount-form button {
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: #f97316;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.discount-form button:hover {
+  background: #ea580c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(249, 115, 22, 0.25);
+}
+
+.remove-discount-btn {
+  margin-top: 10px;
+  border: none;
+  background: transparent;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.remove-discount-btn:hover {
+  text-decoration: underline;
+}
+
+.discount-row {
+  color: #16a34a;
+}
+
+.discount-row strong {
+  color: #16a34a;
+}
+
+@media (max-width: 576px) {
+  .discount-form-row {
+    flex-direction: column;
+  }
+
+  .discount-form button {
+    width: 100%;
+  }
+}
+
 /* =========================
    Empty Cart
 ========================= */

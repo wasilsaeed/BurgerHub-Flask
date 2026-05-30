@@ -64,6 +64,7 @@
     box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
     border: 1px solid #e5e7eb;
     overflow: hidden;
+    margin-top: 20px;
 }
 
 .admin-panel::before {
@@ -103,4 +104,29 @@
     .admin-panel {
         padding: 26px;
     }
+}
+
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard-table th {
+  font-size: 13px;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+.dashboard-table td {
+  font-size: 14px;
+  color: #111827;
 }

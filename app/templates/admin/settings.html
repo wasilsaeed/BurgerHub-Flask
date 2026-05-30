@@ -28,30 +28,30 @@
             <div class="form-grid two-columns">
                 <div class="form-group">
                     <label>Restaurant Name</label>
-                    <input type="text" name="restaurant_name" value="BurgerHub">
+                    <input type="text" name="restaurant_name" value="{{ setting.restaurant_name }}" required>
                 </div>
 
                 <div class="form-group">
                     <label>Support Email</label>
-                    <input type="email" name="support_email" value="support@burgerhub.com">
+                    <input type="email" name="support_email" value="{{ setting.support_email }}" required>
                 </div>
             </div>
 
             <div class="form-grid two-columns">
                 <div class="form-group">
                     <label>Phone Number</label>
-                    <input type="text" name="phone" value="+1 555 123 4567">
+                    <input type="text" name="phone" value="{{ setting.phone }}" required>
                 </div>
 
                 <div class="form-group">
                     <label>Opening Hours</label>
-                    <input type="text" name="hours" value="10:00 AM - 11:00 PM">
+                    <input type="text" name="hours" value="{{ setting.hours }}" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Restaurant Address</label>
-                <textarea name="address" rows="4">123 Burger Street, Food City</textarea>
+                <textarea name="address" rows="4" required>{{ setting.address }}</textarea>
             </div>
         </section>
 
@@ -63,7 +63,7 @@
 
             <div class="toggle-list">
                 <label class="toggle-item">
-                    <input type="checkbox" checked>
+                    <input type="checkbox" name="accept_orders" {% if setting.accept_orders %}checked{% endif %}>
                     <span>
                         <strong>Accept Online Orders</strong>
                         <small>Allow customers to place orders from the website.</small>
@@ -71,7 +71,7 @@
                 </label>
 
                 <label class="toggle-item">
-                    <input type="checkbox" checked>
+                    <input type="checkbox" name="enable_delivery" {% if setting.enable_delivery %}checked{% endif %}>
                     <span>
                         <strong>Enable Delivery</strong>
                         <small>Customers can choose delivery during checkout.</small>
@@ -79,7 +79,7 @@
                 </label>
 
                 <label class="toggle-item">
-                    <input type="checkbox" checked>
+                    <input type="checkbox" name="enable_pickup" {% if setting.enable_pickup %}checked{% endif %}>
                     <span>
                         <strong>Enable Pickup</strong>
                         <small>Customers can collect orders from the restaurant.</small>
@@ -88,24 +88,55 @@
             </div>
         </section>
 
-        <section class="settings-card" id="account">
-            <div class="card-header">
-                <h2>Admin Account</h2>
-                <p>Update basic admin profile information.</p>
-            </div>
+       <section class="settings-card" id="account">
+    <div class="card-header">
+        <h2>Admin Account</h2>
+        <p>Update admin login credentials.</p>
+    </div>
 
-            <div class="form-grid two-columns">
-                <div class="form-group">
-                    <label>Admin Name</label>
-                    <input type="text" name="admin_name" value="Admin">
-                </div>
+    <div class="form-grid two-columns">
+        <div class="form-group">
+            <label>Admin Name</label>
+            <input
+                type="text"
+                name="admin_name"
+                value="{{ setting.admin_name }}"
+                required
+            >
+        </div>
 
-                <div class="form-group">
-                    <label>Admin Email</label>
-                    <input type="email" name="admin_email" value="admin@burgerhub.com">
-                </div>
-            </div>
-        </section>
+        <div class="form-group">
+            <label>Admin Email</label>
+            <input
+                type="email"
+                name="admin_email"
+                value="{{ setting.admin_email }}"
+                required
+            >
+        </div>
+    </div>
+
+    <div class="form-grid two-columns">
+        <div class="form-group">
+            <label>Admin Username</label>
+            <input
+                type="text"
+                name="admin_username"
+                value="{{ setting.admin_username }}"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>New Password</label>
+            <input
+                type="password"
+                name="admin_password"
+                placeholder="Leave blank to keep current password"
+            >
+        </div>
+    </div>
+</section>
 
         <div class="settings-actions">
             <button type="submit" class="btn-primary">Save Settings</button>

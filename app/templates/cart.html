@@ -119,14 +119,62 @@ block style %}
           <span>Delivery</span>
           <strong>Rs. 0</strong>
         </div>
+       <form
+  action="{{ url_for('main.apply_cart_discount') }}"
+  method="POST"
+  class="discount-form"
+>
+  <label for="discount_code">Have a discount code?</label>
+
+  <div class="discount-form-row">
+    <input
+      type="text"
+      id="discount_code"
+      name="discount_code"
+      placeholder="Enter discount code"
+      value="{{ discount_code or '' }}"
+    >
+
+    <button type="submit">Apply</button>
+  </div>
+</form>
+
+{% if discount_code %}
+<form
+  action="{{ url_for('main.remove_cart_discount') }}"
+  method="POST"
+>
+  <button type="submit" class="remove-discount-btn">
+    Remove discount
+  </button>
+</form>
+{% endif %}
       </div>
 
       <div class="summary-divider"></div>
 
-      <div class="summary-row total-row">
+      <!-- <div class="summary-row total-row">
         <span>Total</span>
         <strong>Rs. {{ cart_total }}</strong>
-      </div>
+      </div> -->
+
+
+      <div class="summary-row">
+  <span>Subtotal</span>
+  <strong>Rs. {{ cart_total }}</strong>
+</div>
+
+{% if discount_amount > 0 %}
+<div class="summary-row discount-row">
+  <span>Discount</span>
+  <strong>- Rs. {{ discount_amount }}</strong>
+</div>
+{% endif %}
+
+<div class="summary-row total-row">
+  <span>Total</span>
+  <strong>Rs. {{ final_total }}</strong>
+</div>
 
       <div class="summary-note">
         Delivery charges and offers can be confirmed on checkout.

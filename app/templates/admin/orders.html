@@ -80,7 +80,7 @@
                     <td>{{ order.items|length if order.items else 0 }}</td>
 
                     <td>
-                        <strong>${{ "%.2f"|format(order.total_amount if order.total_amount else 0) }}</strong>
+                        <strong>Rs.{{ "%.2f"|format(order.total_amount if order.total_amount else 0) }}</strong>
                     </td>
 
                     <td>

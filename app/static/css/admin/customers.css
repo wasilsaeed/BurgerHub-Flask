@@ -103,13 +103,13 @@
 }
 
 .customers-panel thead {
-    background: #f9fafb;
+    background: #111827;
+    color: white;
 }
 
 .customers-panel th {
     padding: 18px 24px;
     text-align: left;
-    color: #6b7280;
     font-size: 13px;
     font-weight: 900;
     text-transform: uppercase;
